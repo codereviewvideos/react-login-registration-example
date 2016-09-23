@@ -2,27 +2,44 @@
 // This boilerplate file is likely to be the same for each project that uses Redux.
 // With Redux, the actual stores are in /reducers.
 
-import {createStore, compose, applyMiddleware} from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import createLogger from 'redux-logger';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunkMiddleware from 'redux-thunk';
+import { persistState } from 'redux-devtools';
 import rootReducer from '../reducers';
+import DevTools from '../containers/DevTools';
 
-export default function configureStore(initialState) {
-  const middewares = [
-    // Add other middleware on this line...
+const loggerMiddlware = createLogger();
+
+const enhancer = compose(
+  // Middleware you want to use in development:
+  applyMiddleware(
 
     // Redux middleware that spits an error on you when you try to mutate your state either inside a dispatch or between dispatches.
     reduxImmutableStateInvariant(),
 
-    // thunk middleware can also accept an extra argument to be passed to each thunk action
-    // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
     thunkMiddleware,
-  ];
+    loggerMiddlware
+  ),
+  // Required! Enable Redux DevTools with the monitors you chose
+  DevTools.instrument(),
+  // Optional. Lets you write ?debug_session=<key> in address bar to persist debug sessions
+  persistState(getDebugSessionKey())
+);
 
-  const store = createStore(rootReducer, initialState, compose(
-    applyMiddleware(...middewares),
-    window.devToolsExtension ? window.devToolsExtension() : f => f // add support for Redux dev tools
-    )
+function getDebugSessionKey() {
+  // You can write custom logic here!
+  // By default we try to read the key from ?debug_session=<key> in the address bar
+  const matches = window.location.href.match(/[?&]debug_session=([^&#]+)\b/);
+  return (matches && matches.length > 0)? matches[1] : null;
+}
+
+export default function configureStore(initialState) {
+  const store = createStore(
+    rootReducer,
+    initialState,
+    enhancer
   );
 
   if (module.hot) {

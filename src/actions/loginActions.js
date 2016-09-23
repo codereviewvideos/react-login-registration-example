@@ -1,5 +1,5 @@
-import * as types from '../constants/actionTypes';
-
+import * as types from '../constants/ActionTypes';
+import { addNotification } from '../actions/notificationActions';
 import dateHelper from '../utils/dateHelper';
 
 // example of a thunk using the redux-thunk middleware
@@ -28,7 +28,7 @@ export function calculateFuelSavings(settings, fieldName, value) {
 
 
 /**
- * Logs an user in
+ * Logs a user in
  * @param  {string} username The username of the user to be logged in
  * @param  {string} password The password of the user to be logged in
  */
@@ -36,38 +36,64 @@ export function login(username, password) {
   return dispatch => {
     dispatch(sendingRequest(true));
     return fetch('http://api.rest-user-api.dev/app_acceptance.php/login', {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ username, password })
-    })
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      })
       .then(res => {
         console.log('res', res);
-        // if (!res.ok) {
-        //   throw res.statusText;
-        // }
+        if (!res.ok) {
+          return
+        }
 
-        // dispatch(addedTumblrPost(tumblrPost, res));
-        // dispatch(addNotification('some message', 'success'));
+        return res.json();
+      })
+      .then(body => {
+        let token = body.token || '';
+        return dispatch(loginSuccess(token))
       })
       .catch(err => {
         console.log('there was an error sir', err);
-        // dispatch(failedAddingTumblrPost(tumblrPost, err));
-        // dispatch(addNotification(err, 'error'));
+        dispatch(addNotification(errorMsg, 'error'));
+        return loginFailed(err);
       })
-      ;
+    ;
   };
 }
 
 
+// export function loginAttempt() {
+//   return dispatch => {
+//     dispatch(sendingRequest(true));
+//   }
+// }
 
-/**
- * Sets the requestSending state, which displays a loading indicator during requests
- * @param  {boolean} sending The new state the app should have
- * @return {object}          Formatted action for the reducer to handle
- */
-export function sendingRequest(sending) {
-  return { type: types.SENDING_REQUEST, sending };
+
+export function loginSuccess(token) {
+  return {
+    type: types.LOGIN__SUCCESS,
+    sendingRequest: false,
+    isAuthenticated: true,
+    id_token: token
+  };
 }
+
+
+export function loginFailed(errorMsg) {
+  return dispatch => {
+    dispatch(sendingRequest(false));
+
+
+    return {
+      type: types.LOGIN__SUCCESS,
+      sendingRequest: false,
+      isAuthenticated: true,
+      id_token: token
+    };
+  }
+}
+
+

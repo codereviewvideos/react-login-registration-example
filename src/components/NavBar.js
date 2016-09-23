@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, IndexLink } from 'react-router';
-import { Nav, Navbar, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
 
 const NavBar = () => (
   <nav className="navbar navbar-default navbar-static-top">
@@ -13,9 +12,9 @@ const NavBar = () => (
                 data-target="#bs-example-navbar-collapse-1"
                 aria-expanded="false">
           <span className="sr-only">Toggle navigation</span>
-          <span className="icon-bar"></span>
-          <span className="icon-bar"></span>
-          <span className="icon-bar"></span>
+          <span className="icon-bar" />
+          <span className="icon-bar" />
+          <span className="icon-bar" />
         </button>
         <IndexLink to="/" className="navbar-brand">Home</IndexLink>
       </div>

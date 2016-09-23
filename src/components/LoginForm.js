@@ -7,7 +7,7 @@ const LoginForm = (props) => {
   const { handleSubmit } = props;
 
   return (
-      <form className="form-signin" onSubmit={handleSubmit}>
+      <form className="form-signin" onSubmit={handleSubmit(props.onSubmit)}>
 
         <h2 className="form-signin-heading">Please sign in</h2>
 

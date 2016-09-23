@@ -1,36 +1,42 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as actions from '../actions/loginActions';
+import {login} from '../actions/loginActions';
 import LoginForm from '../components/LoginForm';
 import '../styles/login-page.css';
 
 export class LoginPage extends Component {
 
   doLogin(formData) {
-    console.log('I am groot', formData);
+    this.props.actions.login(formData.username, formData.password);
   }
 
   render() {
     return (
       <div>
-        <LoginForm onSubmit={this.doLogin}/>
+        <LoginForm onSubmit={this.doLogin.bind(this)}/>
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    data: state.loginForm
-  };
-}
+LoginPage.propTypes = {
+  actions: PropTypes.object.isRequired
+};
 
-function mapDispatchToProps(dispatch) {
+const mapStateToProps = (state) => {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    pageState: state
   };
-}
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({
+      login
+    }, dispatch)
+  };
+};
 
 export default connect(
   mapStateToProps,
