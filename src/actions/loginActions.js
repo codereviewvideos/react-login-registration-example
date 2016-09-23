@@ -1,30 +1,13 @@
 import * as types from '../constants/ActionTypes';
 import { addNotification } from '../actions/notificationActions';
-import dateHelper from '../utils/dateHelper';
+import { sendingRequest } from '../actions/utilityActions';
 
-// example of a thunk using the redux-thunk middleware
-export function saveFuelSavings(settings) {
-  return function (dispatch) {
-    // thunks allow for pre-processing actions, calling apis, and dispatching multiple actions
-    // in this case at this point we could call a service that would persist the fuel savings
-    return dispatch({
-      type: types.SAVE_FUEL_SAVINGS,
-      dateModified: dateHelper.getFormattedDateTime(),
-      settings
-    });
-  };
-}
 
-export function calculateFuelSavings(settings, fieldName, value) {
-  return {
-    type: types.CALCULATE_FUEL_SAVINGS,
-    dateModified: dateHelper.getFormattedDateTime(),
-    settings,
-    fieldName,
-    value
-  };
-}
 
+// TODO need a way to check if id_token has expired
+// TODO need to check if exists in local storage
+// TODO and if it's still valid, if not refresh ?
+// TODO or log out
 
 
 /**
@@ -34,31 +17,41 @@ export function calculateFuelSavings(settings, fieldName, value) {
  */
 export function login(username, password) {
   return dispatch => {
+
+    let requestConfig = {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, password })
+    };
+
     dispatch(sendingRequest(true));
-    return fetch('http://api.rest-user-api.dev/app_acceptance.php/login', {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-      })
+
+    return fetch('http://api.rest-user-api.dev/app_acceptance.php/login', requestConfig)
       .then(res => {
         console.log('res', res);
         if (!res.ok) {
-          return
+          dispatch(addNotification(res.statusText, 'error'));
+          dispatch(sendingRequest(false));
+          dispatch(loginFailed(res.statusText));
+          return Promise.reject(username);
         }
 
         return res.json();
       })
       .then(body => {
         let token = body.token || '';
-        return dispatch(loginSuccess(token))
+        localStorage.setItem('id_token', token);
+        dispatch(sendingRequest(false));
+        return dispatch(loginSuccess(token));
       })
       .catch(err => {
         console.log('there was an error sir', err);
-        dispatch(addNotification(errorMsg, 'error'));
-        return loginFailed(err);
+        dispatch(addNotification(err, 'error'));
+        dispatch(sendingRequest(false));
+        return dispatch(loginFailed(err));
       })
     ;
   };
@@ -75,7 +68,6 @@ export function login(username, password) {
 export function loginSuccess(token) {
   return {
     type: types.LOGIN__SUCCESS,
-    sendingRequest: false,
     isAuthenticated: true,
     id_token: token
   };
@@ -83,17 +75,12 @@ export function loginSuccess(token) {
 
 
 export function loginFailed(errorMsg) {
-  return dispatch => {
-    dispatch(sendingRequest(false));
-
-
-    return {
-      type: types.LOGIN__SUCCESS,
-      sendingRequest: false,
-      isAuthenticated: true,
-      id_token: token
-    };
-  }
+  return {
+    type: types.LOGIN__FAILED,
+    isAuthenticated: false,
+    id_token: '',
+    errorMsg
+  };
 }
 
 

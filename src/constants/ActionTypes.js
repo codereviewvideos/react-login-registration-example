@@ -9,5 +9,5 @@ export const SENDING_REQUEST = 'SENDING_REQUEST';
 
 
 export const LOGIN__SUCCESS = 'LOGIN__SUCCESS';
-export const LOGIN__MISSING_FIELD = 'LOGIN__MISSING_FIELD';
 export const LOGIN__FAILED = 'LOGIN__FAILED';
+export const LOGOUT__SUCCESS = 'LOGOUT__SUCCESS';

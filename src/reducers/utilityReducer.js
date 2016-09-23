@@ -1,13 +1,14 @@
 import {
-  ADD_NOTIFICATION
+  SENDING_REQUEST
 } from '../constants/ActionTypes';
 
-export default function notification(state = {}, action) {
+export default function utility(state = {}, action) {
   switch (action.type) {
-    case ADD_NOTIFICATION:
+    case SENDING_REQUEST:
+
+      console.log('cluck cluck' );
       return Object.assign({}, state, {
-        message: action.message,
-        level: action.level
+        sendingRequest: action.sendingRequest
       });
 
     default:
