@@ -6,7 +6,7 @@ import {
 
 export default function auth(state = {
   sendingRequest: false,
-  isAuthenticated: localStorage.getItem('idToken')
+  isAuthenticated: !!localStorage.getItem('idToken')
 }, action) {
 
   switch (action.type) {

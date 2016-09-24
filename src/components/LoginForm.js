@@ -9,7 +9,7 @@ const LoginForm = (props) => {
   return (
       <form className="form-signin" onSubmit={handleSubmit(props.onSubmit)}>
 
-        <h2 className="form-signin-heading">Please sign in</h2>
+        <h2 className="form-signin-heading">Please log in</h2>
 
         <label htmlFor="username" className="sr-only">Username</label>
         <Field component="input"
@@ -30,7 +30,7 @@ const LoginForm = (props) => {
                placeholder="Password"
                required />
 
-        <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button className="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
 
       </form>
   );
