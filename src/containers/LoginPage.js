@@ -40,14 +40,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators({
-      login
-    }, dispatch)
-  };
-};
-
 export default connect(
   mapStateToProps
 )(withRouter(LoginPage))
