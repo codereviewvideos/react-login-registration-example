@@ -1,7 +1,7 @@
 import * as types from '../constants/ActionTypes';
 import { addNotification } from '../actions/notificationActions';
 import { sendingRequest } from '../actions/utilityActions';
-
+import jwtDecode from 'jwt-decode';
 
 // TODO need a way to check if idToken has expired - it's stored in the JWT
 // TODO need to check if exists in local storage
@@ -66,9 +66,7 @@ export function login(username, password) {
 
 export function loginSuccess(token) {
 
-  let { userId } = window.btoa(token); // pull out the user ID from the JWT
-
-  console.log('userId', userId);
+  let { userId } = jwtDecode(token); // pull out the user ID from the JWT
 
   return {
     type: types.LOGIN__SUCCESS,

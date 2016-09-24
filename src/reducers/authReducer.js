@@ -15,7 +15,6 @@ export default function auth(state = {
       return Object.assign({}, state, {
         isAuthenticated: true,
         userId: action.userId,
-        errorMessage: ''
       });
 
     case LOGIN__FAILED:
@@ -30,6 +29,6 @@ export default function auth(state = {
       });
 
     default:
-      return state
+      return state;
   }
 }
