@@ -3,8 +3,7 @@ import { addNotification } from '../actions/notificationActions';
 import { sendingRequest } from '../actions/utilityActions';
 
 
-
-// TODO need a way to check if id_token has expired
+// TODO need a way to check if idToken has expired - it's stored in the JWT
 // TODO need to check if exists in local storage
 // TODO and if it's still valid, if not refresh ?
 // TODO or log out
@@ -43,7 +42,7 @@ export function login(username, password) {
       })
       .then(body => {
         let token = body.token || '';
-        localStorage.setItem('id_token', token);
+        localStorage.setItem('idToken', token);
         dispatch(sendingRequest(false));
         return dispatch(loginSuccess(token));
       })
@@ -66,10 +65,16 @@ export function login(username, password) {
 
 
 export function loginSuccess(token) {
+
+  let { userId } = window.btoa(token); // pull out the user ID from the JWT
+
+  console.log('userId', userId);
+
   return {
     type: types.LOGIN__SUCCESS,
     isAuthenticated: true,
-    id_token: token
+    idToken: token,
+    userId
   };
 }
 
@@ -78,9 +83,12 @@ export function loginFailed(errorMsg) {
   return {
     type: types.LOGIN__FAILED,
     isAuthenticated: false,
-    id_token: '',
+    idToken: '',
     errorMsg
   };
 }
 
 
+
+
+// TODO logout action to remove it_token from localStorage

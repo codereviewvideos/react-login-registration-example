@@ -6,6 +6,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createLogger from 'redux-logger';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunkMiddleware from 'redux-thunk';
+import { apiMiddleware } from 'redux-api-middleware';
 import { persistState } from 'redux-devtools';
 import rootReducer from '../reducers';
 import DevTools from '../containers/DevTools';
@@ -20,7 +21,9 @@ const enhancer = compose(
     reduxImmutableStateInvariant(),
 
     thunkMiddleware,
-    loggerMiddlware
+    loggerMiddlware,
+
+    apiMiddleware
   ),
   // Required! Enable Redux DevTools with the monitors you chose
   DevTools.instrument(),
