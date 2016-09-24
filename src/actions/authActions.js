@@ -1,5 +1,5 @@
 import * as types from '../constants/ActionTypes';
-import { addNotification } from '../actions/notificationActions';
+import addNotification from '../actions/notificationActions';
 import { sendingRequest } from '../actions/utilityActions';
 import jwtDecode from 'jwt-decode';
 

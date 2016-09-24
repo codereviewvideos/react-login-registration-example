@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addNotification } from '../actions/notificationActions';
+import addNotification from '../actions/notificationActions';
 import NotificationSystem from 'react-notification-system';
 
 class NotificationContainer extends Component {

@@ -24,7 +24,7 @@ export default function auth(state = {
       });
 
     case LOGOUT__SUCCESS:
-      return Object.assign({}, state, {
+      return Object.assign({}, {
         isAuthenticated: false
       });
 

@@ -8,12 +8,11 @@ function callApi(endpoint, authenticated) {
   let config = {};
 
   if(authenticated) {
-    if(token) {
+    if (token) {
       config = {
         headers: { 'Authorization': `Bearer ${token}` }
       };
-    }
-    else {
+    } else {
       throw "No token saved!";
     }
   }
@@ -21,13 +20,15 @@ function callApi(endpoint, authenticated) {
   return fetch(endpoint, config)
     .then(response =>
       response.json().then(json => ({ json, response }))
-    ).then(({ json, response }) => {
+    )
+    .then(({ json, response }) => {
       if (!response.ok) {
         return Promise.reject(json);
       }
 
       return json;
-    }).catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
 }
 
 
