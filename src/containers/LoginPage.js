@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {login} from '../actions/loginActions';
+import {login} from '../actions/authActions';
 import LoginForm from '../components/LoginForm';
 import '../styles/login-page.css';
 

@@ -87,6 +87,13 @@ export function loginFailed(errorMsg) {
 }
 
 
+export function logout() {
 
+  localStorage.removeItem('idToken');
 
-// TODO logout action to remove it_token from localStorage
+  return {
+    type: types.LOGOUT__SUCCESS,
+    isAuthenticated: false,
+    idToken: null
+  };
+}

@@ -4,7 +4,12 @@ import { Link, IndexLink } from 'react-router';
 const NavBar = (props) => {
 
   const loginOrProfile = props.auth.isAuthenticated ? (
-    <p className="navbar-text navbar-right">Welcome back ..username..</p>
+    <div className="navbar-right">
+      <p className="navbar-text">Welcome back ..username..</p>
+      <ul className="nav navbar-nav">
+        <li><Link to="/logout">Log out</Link></li>
+      </ul>
+    </div>
   ) : (
     <ul className="nav navbar-nav navbar-right">
       <li><Link to="/login">Log in</Link></li>
