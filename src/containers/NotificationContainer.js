@@ -15,7 +15,6 @@ class NotificationContainer extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log('got a notification', newProps);
     const { message, level } = newProps.notification;
     this.notificationSystem.addNotification({
       message,

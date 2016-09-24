@@ -4,32 +4,23 @@ import { bindActionCreators } from 'redux';
 import NavBar from '../components/NavBar';
 import NotificationContainer from './NotificationContainer';
 
-const App = (props) => {
+const App = (props) => (
+  <div>
+    <NavBar auth={props.auth} />
 
-  console.log('App props', props);
-  console.log('App state', this);
-
-  return (
-    <div>
-      <NavBar auth={props.auth} />
-
-      <div className="container">
-        {props.children}
-      </div>
-
-      <NotificationContainer props/>
+    <div className="container">
+      {props.children}
     </div>
-  );
-};
+
+    <NotificationContainer props/>
+  </div>
+);
 
 App.propTypes = {
   children: PropTypes.element
 };
 
 function mapStateToProps(state) {
-
-  console.log('mapStateToProps', state);
-
   return {
     auth: state.auth
   };

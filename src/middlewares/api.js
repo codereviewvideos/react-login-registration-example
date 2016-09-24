@@ -1,9 +1,7 @@
-const BASE_URL = 'http://localhost:3000/';
-
 function callApi(endpoint, authenticated) {
 
 
-  console.log('what?');
+  console.log('middleware/apis - callApi');
 
 
   let token = localStorage.getItem('idToken') || null;
@@ -20,7 +18,7 @@ function callApi(endpoint, authenticated) {
     }
   }
 
-  return fetch(BASE_URL + endpoint, config)
+  return fetch(endpoint, config)
     .then(response =>
       response.text().then(text => ({ text, response }))
     ).then(({ text, response }) => {
@@ -38,9 +36,16 @@ function callApi(endpoint, authenticated) {
 export const CALL_API = Symbol('Call API');
 
 
-
-
+/**
+ * This is the middleware itself
+ *
+ * It relies on the callApi function defined above
+ *
+ * @param store
+ */
 export default store => next => action => {
+
+  console.log('middleware/apis - default');
 
   const callAPI = action[CALL_API];
 
@@ -51,9 +56,16 @@ export default store => next => action => {
 
   let { endpoint, types, authenticated } = callAPI;
 
+  const actionWith = data => {
+    const finalAction = Object.assign({}, action, data);
+    delete finalAction[CALL_API];
+    return finalAction;
+  };
+
   const [ requestType, successType, errorType ] = types;
 
-  // Passing the authenticated boolean back in our data will let us distinguish between normal and secret quotes
+  next(actionWith({ type: requestType }));
+
   return callApi(endpoint, authenticated).then(
     response =>
       next({

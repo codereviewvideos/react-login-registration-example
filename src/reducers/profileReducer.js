@@ -16,6 +16,7 @@ export default function fuelSavingsReducer(state = {
       });
 
     case PROFILE__SUCCESSFULLY_RECEIVED:
+      console.log('PROFILE__SUCCESSFULLY_RECEIVED - action', action);
       return Object.assign({}, state, {
         isFetching: false,
         profile: action.response,
@@ -23,6 +24,7 @@ export default function fuelSavingsReducer(state = {
       });
 
     case PROFILE__FAILED_RECEIVING:
+      console.log('PROFILE__FAILED_RECEIVING - action', action);
       return Object.assign({}, state, {
         isFetching: false
       });

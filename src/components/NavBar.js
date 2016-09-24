@@ -3,8 +3,6 @@ import { Link, IndexLink } from 'react-router';
 
 const NavBar = (props) => {
 
-  console.log('NavBar', props);
-
   const loginOrProfile = props.auth.isAuthenticated ? (
     <p className="navbar-text navbar-right">Welcome back ..username..</p>
   ) : (
