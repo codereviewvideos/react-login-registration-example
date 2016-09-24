@@ -14,9 +14,16 @@ class ProfileContainer extends Component {
     this.props.actions.fetchProfile();
   }
 
+  componentWillReceiveProps(newProps) {
+    console.log('got some new props', newProps);
+  }
+
   render() {
+
+    let {username, email} = this.props.profile.profile;
+
     return (
-      <ProfilePage />
+      <ProfilePage username={username} emailAddress={email} />
     );
   }
 }

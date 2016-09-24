@@ -7,8 +7,6 @@ import {
 }  from '../constants/ActionTypes';
 
 export function fetchProfile() {
-  console.log('profileActions :: fetchProfile');
-  console.log('profileActions :: CALL_API', CALL_API);
   return {
     [CALL_API]: {
       endpoint: `http://api.rest-user-api.dev/app_acceptance.php/profile/1`,

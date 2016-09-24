@@ -20,13 +20,13 @@ function callApi(endpoint, authenticated) {
 
   return fetch(endpoint, config)
     .then(response =>
-      response.text().then(text => ({ text, response }))
-    ).then(({ text, response }) => {
+      response.json().then(json => ({ json, response }))
+    ).then(({ json, response }) => {
       if (!response.ok) {
-        return Promise.reject(text);
+        return Promise.reject(json);
       }
 
-      return text;
+      return json;
     }).catch(err => console.log(err));
 }
 

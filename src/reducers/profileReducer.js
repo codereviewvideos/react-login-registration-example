@@ -11,6 +11,7 @@ export default function fuelSavingsReducer(state = {
   switch (action.type) {
 
     case PROFILE__REQUESTING:
+      console.log('PROFILE__REQUESTING - action', action);
       return Object.assign({}, state, {
         isFetching: true
       });
