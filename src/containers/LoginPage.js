@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import { withRouter } from 'react-router'
 import {login} from '../actions/authActions';
 import LoginForm from '../components/LoginForm';
@@ -13,17 +12,17 @@ export class LoginPage extends Component {
     this.props.dispatch(login(formData.username, formData.password));
 
     // this is wrong
-    this.props.dispatch(addNotification(`Welcome back ${formData.username}`, 'success'));
+    //
   }
 
   componentWillReceiveProps(newProps) {
-
-
-    console.log('Login Page - got some new props', newProps);
-
     if (newProps.pageState.auth.isAuthenticated) {
       this.props.router.replace('/');
     }
+
+    // if (newProps.pageState.auth.errorMessage) {
+    //   this.props.dispatch(addNotification(`That did not work`, 'error'));
+    // }
   }
 
   render() {

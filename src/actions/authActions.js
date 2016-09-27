@@ -1,6 +1,5 @@
 import * as types from '../constants/ActionTypes';
 import addNotification from '../actions/notificationActions';
-import { sendingRequest } from '../actions/utilityActions';
 import jwtDecode from 'jwt-decode';
 
 // TODO need a way to check if idToken has expired - it's stored in the JWT
@@ -26,14 +25,11 @@ export function login(username, password) {
       body: JSON.stringify({ username, password })
     };
 
-    dispatch(sendingRequest(true));
-
     return fetch('http://api.rest-user-api.dev/app_acceptance.php/login', requestConfig)
       .then(res => {
         console.log('res', res);
         if (!res.ok) {
           dispatch(addNotification(res.statusText, 'error'));
-          dispatch(sendingRequest(false));
           dispatch(loginFailed(res.statusText));
           return Promise.reject(username);
         }
@@ -43,25 +39,16 @@ export function login(username, password) {
       .then(body => {
         let token = body.token || '';
         localStorage.setItem('idToken', token);
-        dispatch(sendingRequest(false));
         return dispatch(loginSuccess(token));
       })
       .catch(err => {
         console.log('there was an error sir', err);
         dispatch(addNotification(err, 'error'));
-        dispatch(sendingRequest(false));
         return dispatch(loginFailed(err));
       })
     ;
   };
 }
-
-
-// export function loginAttempt() {
-//   return dispatch => {
-//     dispatch(sendingRequest(true));
-//   }
-// }
 
 
 export function loginSuccess(token) {
