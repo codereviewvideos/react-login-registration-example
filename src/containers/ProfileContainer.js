@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchProfile } from '../actions/profileActions';
+import { fetchProfile, changePassword } from '../actions/profileActions';
 import ProfilePage from '../components/ProfilePage';
+import ChangePasswordForm from '../components/ChangePasswordForm';
 
 class ProfileContainer extends Component {
 
@@ -14,8 +15,9 @@ class ProfileContainer extends Component {
     this.props.actions.fetchProfile();
   }
 
-  componentWillReceiveProps(newProps) {
-    console.log('got some new props', newProps);
+  onChangePasswordHandler(formData) {
+    let { currentPassword, newPassword, newPasswordRepeated } = formData;
+    this.props.actions.changePassword(currentPassword, newPassword, newPasswordRepeated);
   }
 
   render() {
@@ -23,7 +25,10 @@ class ProfileContainer extends Component {
     let {username, email} = this.props.profile.profile;
 
     return (
-      <ProfilePage username={username} emailAddress={email} />
+      <div>
+        <ProfilePage username={username} emailAddress={email} />
+        <ChangePasswordForm onSubmit={this.onChangePasswordHandler.bind(this)}/>
+      </div>
     );
   }
 }
@@ -37,7 +42,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      fetchProfile
+      fetchProfile,
+      changePassword
     }, dispatch)
   };
 }

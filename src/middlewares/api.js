@@ -1,4 +1,4 @@
-function callApi(endpoint, authenticated) {
+function callApi(endpoint, method, body = {}, authenticated) {
 
 
   console.log('middleware/apis - callApi');
@@ -10,7 +10,12 @@ function callApi(endpoint, authenticated) {
   if(authenticated) {
     if (token) {
       config = {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-type': 'application/json'
+        },
+        method,
+        body
       };
     } else {
       throw "No token saved!";
@@ -55,7 +60,14 @@ export default store => next => action => {
     return next(action);
   }
 
-  let { endpoint, types, authenticated } = callAPI;
+  let {
+    endpoint,
+    types,
+    method = 'GET',
+    body = {},
+    authenticated
+  } = callAPI;
+
 
   const actionWith = data => {
     const finalAction = Object.assign({}, action, data);
@@ -67,7 +79,7 @@ export default store => next => action => {
 
   next(actionWith({ type: requestType }));
 
-  return callApi(endpoint, authenticated).then(
+  return callApi(endpoint, method, body, authenticated).then(
     response =>
       next({
         response,

@@ -11,10 +11,16 @@ export class LoginPage extends Component {
 
   doLogin(formData) {
     this.props.dispatch(login(formData.username, formData.password));
+
+    // this is wrong
     this.props.dispatch(addNotification(`Welcome back ${formData.username}`, 'success'));
   }
 
   componentWillReceiveProps(newProps) {
+
+
+    console.log('Login Page - got some new props', newProps);
+
     if (newProps.pageState.auth.isAuthenticated) {
       this.props.router.replace('/');
     }
