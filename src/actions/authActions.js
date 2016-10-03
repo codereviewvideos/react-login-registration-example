@@ -29,9 +29,9 @@ export function login(username, password) {
       .then(res => {
         console.log('res', res);
         if (!res.ok) {
-          dispatch(addNotification(res.statusText, 'error'));
+          // dispatch(addNotification(res.statusText, 'error'));
           dispatch(loginFailed(res.statusText));
-          return Promise.reject(username);
+          return Promise.reject(res.statusText);
         }
 
         return res.json();
