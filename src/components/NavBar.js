@@ -13,6 +13,7 @@ const NavBar = (props) => {
   ) : (
     <ul className="nav navbar-nav navbar-right">
       <li><Link to="/login">Log in</Link></li>
+      <li><Link to="/register">Register</Link></li>
     </ul>
   );
 

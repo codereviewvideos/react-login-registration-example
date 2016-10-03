@@ -26,11 +26,11 @@ export function fetchProfile(id) {
 }
 
 
-export function changePassword(oldPassword, newPassword, newPasswordRepeated) {
-  console.log('called change password', oldPassword, newPassword, newPasswordRepeated);
+export function changePassword(userId, oldPassword, newPassword, newPasswordRepeated) {
+  console.log('called change password', userId, oldPassword, newPassword, newPasswordRepeated);
   return {
     [CALL_API]: {
-      endpoint: `http://api.rest-user-api.dev/app_acceptance.php/password/1/change`,
+      endpoint: `http://api.rest-user-api.dev/app_acceptance.php/password/${userId}/change`,
       method: 'POST',
       authenticated: true,
       body: JSON.stringify({

@@ -55,6 +55,8 @@ export default store => next => action => {
 
   const callAPI = action[CALL_API];
 
+  console.log('middleware/apis callAPI', callAPI);
+
   // So the middleware doesn't get applied to every single action
   if (typeof callAPI === 'undefined') {
     return next(action);
