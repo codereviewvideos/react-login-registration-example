@@ -39,6 +39,7 @@ export function login(username, password) {
       .then(body => {
         let token = body.token || '';
         localStorage.setItem('idToken', token);
+
         return dispatch(loginSuccess(token));
       })
       .catch(err => {
@@ -53,13 +54,17 @@ export function login(username, password) {
 
 export function loginSuccess(token) {
 
-  let { userId } = jwtDecode(token); // pull out the user ID from the JWT
+  let { userId, username } = jwtDecode(token); // pull out the user data from the JWT
+
+  localStorage.setItem('username', username);
+  localStorage.setItem('userId', userId);
 
   return {
     type: types.LOGIN__SUCCESS,
     isAuthenticated: true,
     idToken: token,
-    userId
+    userId,
+    username
   };
 }
 

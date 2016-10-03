@@ -6,7 +6,9 @@ import {
 
 export default function auth(state = {
   sendingRequest: false,
-  isAuthenticated: !!localStorage.getItem('idToken')
+  isAuthenticated: !!localStorage.getItem('idToken'),
+  userId: localStorage.getItem('userId'),
+  username: localStorage.getItem('username'),
 }, action) {
 
   switch (action.type) {
@@ -15,6 +17,7 @@ export default function auth(state = {
       return Object.assign({}, state, {
         isAuthenticated: true,
         userId: action.userId,
+        username: action.username
       });
 
     case LOGIN__FAILED:

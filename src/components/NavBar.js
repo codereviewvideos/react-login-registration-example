@@ -5,7 +5,7 @@ const NavBar = (props) => {
 
   const loginOrProfile = props.auth.isAuthenticated ? (
     <div className="navbar-right">
-      <p className="navbar-text">Welcome back ..username..</p>
+      <p className="navbar-text">Welcome back {props.auth.username}</p>
       <ul className="nav navbar-nav">
         <li><Link to="/logout">Log out</Link></li>
       </ul>

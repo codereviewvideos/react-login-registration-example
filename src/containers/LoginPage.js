@@ -3,26 +3,18 @@ import {connect} from 'react-redux';
 import { withRouter } from 'react-router'
 import {login} from '../actions/authActions';
 import LoginForm from '../components/LoginForm';
-import addNotification from '../actions/notificationActions'
 import '../styles/login-page.css';
 
 export class LoginPage extends Component {
 
   doLogin(formData) {
     this.props.dispatch(login(formData.username, formData.password));
-
-    // this is wrong
-    //
   }
 
   componentWillReceiveProps(newProps) {
     if (newProps.pageState.auth.isAuthenticated) {
       this.props.router.replace('/');
     }
-
-    // if (newProps.pageState.auth.errorMessage) {
-    //   this.props.dispatch(addNotification(`That did not work`, 'error'));
-    // }
   }
 
   render() {

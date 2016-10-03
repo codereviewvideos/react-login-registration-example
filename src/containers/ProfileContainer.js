@@ -12,7 +12,9 @@ class ProfileContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.fetchProfile();
+    console.log('comp did mount', this);
+    let { userId } = this.props.pageState.auth;
+    this.props.actions.fetchProfile(userId);
   }
 
   onChangePasswordHandler(formData) {
@@ -22,7 +24,7 @@ class ProfileContainer extends Component {
 
   render() {
 
-    let {username, email} = this.props.profile.profile;
+    let {username, email} = this.props.pageState.profile;
 
     return (
       <div>
@@ -35,7 +37,7 @@ class ProfileContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    profile: state.profile
+    pageState: state
   };
 }
 

@@ -10,10 +10,10 @@ import {
 }  from '../constants/ActionTypes';
 
 
-export function fetchProfile() {
+export function fetchProfile(id) {
   return {
     [CALL_API]: {
-      endpoint: `http://api.rest-user-api.dev/app_acceptance.php/profile/1`,
+      endpoint: `http://api.rest-user-api.dev/app_acceptance.php/profile/${id}`,
       method: 'GET',
       authenticated: true,
       types: [

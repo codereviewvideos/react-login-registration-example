@@ -4,8 +4,8 @@ import {
   PROFILE__FAILED_RECEIVING
 }  from '../constants/ActionTypes';
 
-export default function fuelSavingsReducer(state = {
-  profile: {}
+export default function profileReducer(state = {
+  isFetching: false
 }, action) {
 
   switch (action.type) {
@@ -18,10 +18,14 @@ export default function fuelSavingsReducer(state = {
 
     case PROFILE__SUCCESSFULLY_RECEIVED:
       console.log('PROFILE__SUCCESSFULLY_RECEIVED - action', action);
+
+      let { id, username, email } = action.response;
+
       return Object.assign({}, state, {
         isFetching: false,
-        profile: action.response,
-        authenticated: action.authenticated || false
+        id,
+        username,
+        email
       });
 
     case PROFILE__FAILED_RECEIVING:
