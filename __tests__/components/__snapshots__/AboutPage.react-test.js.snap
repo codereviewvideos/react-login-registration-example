@@ -1,0 +1,24 @@
+exports[`test Can see header 1`] = `
+<div>
+  <h2
+    className="alt-header">
+    About
+  </h2>
+  <p>
+    This example app is part of the 
+    <a
+      href="https://github.com/coryhouse/react-slingshot">
+      React-Slingshot starter kit
+    </a>
+    .
+  </p>
+  <p>
+    <a
+      onClick={[Function]}
+      style={Object {}}>
+      Click this bad link
+    </a>
+     to see the 404 page.
+  </p>
+</div>
+`;
