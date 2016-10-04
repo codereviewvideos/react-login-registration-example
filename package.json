@@ -110,5 +110,8 @@
   "repository": {
     "type": "git",
     "url": ""
+  },
+  "jest": {
+    "verbose": true
   }
 }

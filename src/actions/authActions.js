@@ -73,7 +73,6 @@ export function loginFailed(errorMsg) {
   return {
     type: types.LOGIN__FAILED,
     isAuthenticated: false,
-    idToken: '',
     errorMsg
   };
 }
@@ -82,6 +81,8 @@ export function loginFailed(errorMsg) {
 export function logout() {
 
   localStorage.removeItem('idToken');
+  localStorage.removeItem('userId');
+  localStorage.removeItem('username');
 
   return {
     type: types.LOGOUT__SUCCESS,

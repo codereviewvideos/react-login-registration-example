@@ -8,18 +8,18 @@ function callApi(endpoint, method, body = {}, authenticated) {
   let config = {};
 
   if(authenticated) {
-    if (token) {
-      config = {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-type': 'application/json'
-        },
-        method,
-        body
-      };
-    } else {
+    if (!token) {
       throw "No token saved!";
     }
+
+    config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-type': 'application/json'
+      },
+      method,
+      body
+    };
   }
 
   return fetch(endpoint, config)
@@ -33,7 +33,7 @@ function callApi(endpoint, method, body = {}, authenticated) {
 
       return json;
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log('beep', err));
 }
 
 
@@ -81,16 +81,27 @@ export default store => next => action => {
 
   next(actionWith({ type: requestType }));
 
-  return callApi(endpoint, method, body, authenticated).then(
-    response =>
-      next({
-        response,
-        authenticated,
-        type: successType
-      }),
-    error => next({
-      error: error.message || 'There was an error.',
+  try {
+    return callApi(endpoint, method, body, authenticated).then(
+      response =>
+        next({
+          response,
+          authenticated,
+          type: successType
+        }),
+      error => {
+        console.log('i am an error', error);
+        next({
+          error: error.message || 'There was an error.',
+          type: errorType
+        })
+      }
+    );
+  } catch(err) {
+    return next({
+      error: err || 'There was an error.',
       type: errorType
     })
-  );
+  }
+
 };
