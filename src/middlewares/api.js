@@ -9,7 +9,7 @@ function callApi(endpoint, method, body = {}, authenticated) {
 
   if(authenticated) {
     if (!token) {
-      throw "No token saved!";
+      throw STATUS.noTokenSaved;
     }
 
     config = {
@@ -40,6 +40,9 @@ function callApi(endpoint, method, body = {}, authenticated) {
 
 
 export const CALL_API = Symbol('Call API');
+export const STATUS = {
+  noTokenSaved: 'No token saved!'
+};
 
 
 /**

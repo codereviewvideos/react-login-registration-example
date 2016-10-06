@@ -1,4 +1,6 @@
 import { CALL_API } from '../middlewares/api';
+import failedRequest from '../actions/failedRequestActions';
+import {push} from 'react-router-redux'
 import {
   PROFILE__REQUESTING,
   PROFILE__SUCCESSFULLY_RECEIVED,
@@ -28,6 +30,8 @@ export function fetchProfile(id) {
 
     if (actionResponse.error) {
       console.log('it all blew up', actionResponse);
+      // dispatch(failedRequest(444, 'some gibbons broke it all'));
+      dispatch(push('/'));
       // the last dispatched action has errored, break out of the promise chain.
       throw new Error("Promise flow received action error", actionResponse);
     }
