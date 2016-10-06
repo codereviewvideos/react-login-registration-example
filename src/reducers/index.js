@@ -5,6 +5,7 @@ import auth from './authReducer';
 import notification from './notificationReducer';
 import profile from './profileReducer';
 import registration from './registrationReducer';
+import request from './requestReducer';
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   auth,
   notification,
   profile,
-  registration
+  registration,
+  request
 });
 
 export default rootReducer;

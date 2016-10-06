@@ -1,6 +1,7 @@
 import {takeLatest} from 'redux-saga';
 import {call, put} from 'redux-saga/effects';
 import * as types from '../constants/ActionTypes';
+import { LEVEL } from '../actions/notificationActions';
 import { login } from './api';
 
 function * doLogin(action) {
@@ -11,6 +12,8 @@ function * doLogin(action) {
     let { username, password } = action.payload;
 
     console.log('got me some data', username, password);
+
+    yield put({type: types.SENDING_REQUEST, sendingRequest: true});
 
     const user = yield call(login, username, password);
 
@@ -31,6 +34,8 @@ function * doLogin(action) {
     });
 
 
+  } finally {
+    yield put({type: types.SENDING_REQUEST, sendingRequest: false});
   }
 }
 
@@ -54,7 +59,7 @@ export function * doLoginFailed(error) {
   yield put({
     type: types.ADD_NOTIFICATION,
     message: error.message,
-    level: 'warning'
+    level: LEVEL.ERROR
   });
 
   localStorage.removeItem('idToken');
