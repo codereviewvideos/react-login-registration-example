@@ -5,14 +5,20 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createLogger from 'redux-logger';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
-import thunkMiddleware from 'redux-thunk';
-import apiMiddleware from '../middlewares/api';
-import apiErrorMddleware from '../middlewares/apiError';
+// import thunkMiddleware from 'redux-thunk';
+// import apiMiddleware from '../middlewares/api';
+// import apiErrorMddleware from '../middlewares/apiError';
+import createSagaMiddleware, { END } from 'redux-saga';
 import { persistState } from 'redux-devtools';
 import rootReducer from '../reducers';
 import DevTools from '../containers/DevTools';
+import sagas from '../sagas';
 
+
+const sagaMiddleware = createSagaMiddleware();
 const loggerMiddlware = createLogger();
+
+
 
 const enhancer = compose(
   // Middleware you want to use in development:
@@ -21,11 +27,8 @@ const enhancer = compose(
     // Redux middleware that spits an error on you when you try to mutate your state either inside a dispatch or between dispatches.
     reduxImmutableStateInvariant(),
 
-    thunkMiddleware,
-    loggerMiddlware,
-
-    apiMiddleware,
-    apiErrorMddleware
+    sagaMiddleware,
+    loggerMiddlware
   ),
   // Required! Enable Redux DevTools with the monitors you chose
   DevTools.instrument(),
@@ -54,6 +57,9 @@ export default function configureStore(initialState) {
       store.replaceReducer(nextReducer);
     });
   }
+
+  sagaMiddleware.run(sagas);
+  store.close = () => store.dispatch(END);
 
   return store;
 }

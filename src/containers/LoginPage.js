@@ -3,12 +3,20 @@ import {connect} from 'react-redux';
 import { withRouter } from 'react-router'
 import {login} from '../actions/authActions';
 import LoginForm from '../components/LoginForm';
+import * as types from '../constants/ActionTypes';
 import '../styles/login-page.css';
 
 export class LoginPage extends Component {
 
   doLogin(formData) {
-    this.props.dispatch(login(formData.username, formData.password));
+    console.log('do login');
+    this.props.dispatch({
+      type: types.LOGIN__REQUESTED,
+      payload: {
+        username: formData.username,
+        password: formData.password
+      }
+    });
   }
 
   componentWillReceiveProps(newProps) {

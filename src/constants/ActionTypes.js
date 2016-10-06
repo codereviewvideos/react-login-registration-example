@@ -1,7 +1,8 @@
 export const ADD_NOTIFICATION = 'ADD_NOTIFICATION';
 
 
-export const LOGIN__SUCCESS = 'LOGIN__SUCCESS';
+export const LOGIN__REQUESTED = 'LOGIN__REQUESTED';
+export const LOGIN__SUCCEEDED = 'LOGIN__SUCCEEDED';
 export const LOGIN__FAILED = 'LOGIN__FAILED';
 export const LOGOUT__SUCCESS = 'LOGOUT__SUCCESS';
 
