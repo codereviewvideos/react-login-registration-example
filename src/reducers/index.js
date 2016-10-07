@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
   auth,
   notification,
   profile,
-  registration,
+  // registration,
   request
 });
 

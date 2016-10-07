@@ -3,12 +3,17 @@ import {
   LOGIN__SUCCEEDED,
   LOGOUT__SUCCESS
 } from '../constants/ActionTypes';
+import persistentState from '../utils/localStorage';
 
 export default function auth(state = {
-  isAuthenticated: !!localStorage.getItem('idToken'),
-  userId: localStorage.getItem('profile') !== null ? localStorage.getItem('profile').userId : undefined,
-  username: localStorage.getItem('profile') !== null ? localStorage.getItem('profile').username : undefined
+  isAuthenticated: isAuthenticated(),
+  userId: getUserId(),
+  username: getUsername()
 }, action) {
+
+  console.log('isAuthenticated', state.isAuthenticated);
+  console.log('userId', state.userId);
+  console.log('username', state.username);
 
   switch (action.type) {
 
@@ -33,4 +38,26 @@ export default function auth(state = {
     default:
       return state;
   }
+}
+
+
+
+
+
+function isAuthenticated() {
+  return !!persistentState.getItem('idToken');
+}
+
+function getUserId() {
+  const profile = persistentState.getItem('profile');
+
+  console.log('profile', profile);
+  console.log('profile userId', profile.userId);
+
+
+  return profile !== null ? profile.userId : undefined;
+}
+
+function getUsername() {
+  return persistentState.getItem('profile') !== null ? persistentState.getItem('profile').username : undefined;
 }

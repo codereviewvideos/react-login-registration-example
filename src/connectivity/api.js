@@ -1,30 +1,41 @@
-class HttpApiCallError extends Error {
-  constructor(message, statusCode) {
-    super(message);
+import HttpApiCallError from '../errors/HttpApiCallError';
 
-    this.message = message;
-    this.statusCode = statusCode;
+const apiBaseUrl = 'http://api.rest-user-api.dev/app_acceptance.php';
 
-    this.stack = (new Error()).stack;
-    this.name = this.constructor.name;
+const baseRequestConfig = {
+  method: 'GET',
+  mode: 'cors',
+  headers: {
+    'Content-Type': 'application/json'
   }
-}
+};
+
 
 export async function login(username, password) {
 
-  console.log('api - login method called', username, password);
-
-
-  const requestConfig = {
+  let requestConfig = Object.assign({}, baseRequestConfig, {
     method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json'
-    },
     body: JSON.stringify({ username, password })
-  };
+  });
 
-  const response = await fetch('http://api.rest-user-api.dev/app_acceptance.php/login', requestConfig);
+  const response = await fetch(`${apiBaseUrl}/login`, requestConfig);
+
+  if (!response.ok) {
+    throw new HttpApiCallError(response.statusText, response.status);
+  }
+
+  return response.json();
+}
+
+
+export async function fetchProfile(userId) {
+
+  console.log('api fetch profile', userId);
+
+  const response = await fetch(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
+
+  console.log('api fetch profile response', response);
+
 
   if (!response.ok) {
     throw new HttpApiCallError(response.statusText, response.status);
@@ -32,33 +43,4 @@ export async function login(username, password) {
 
   return response.json();
 
-  // if (!loginResponse.ok) {
-  //   console.log('login response', loginResponse);
-  //   throw new Error(
-  //     loginResponse.statusText,
-  //     loginResponse.status
-  //   );
-  // }
-  //   .then(res => {
-  //     console.log('res', res);
-  //     if (!res.ok) {
-  //       // dispatch(addNotification(res.statusText, 'error'));
-  //       dispatch(loginFailed(res.statusText));
-  //       return Promise.reject(res.statusText);
-  //     }
-  //
-  //     return res.json();
-  //   })
-  //   .then(body => {
-  //     let token = body.token || '';
-  //     localStorage.setItem('idToken', token);
-  //
-  //     return dispatch(loginSuccess(token));
-  //   })
-  //   .catch(err => {
-  //     console.log('there was an error sir', err);
-  //     dispatch(addNotification(err, 'error'));
-  //     return dispatch(loginFailed(err));
-  //   })
-  // ;
 }

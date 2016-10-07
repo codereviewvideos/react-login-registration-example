@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { fetchProfile, changePassword } from '../actions/profileActions';
 import ProfilePage from '../components/ProfilePage';
 import ChangePasswordForm from '../components/ChangePasswordForm';
+import * as types from '../constants/ActionTypes';
 
 class ProfileContainer extends Component {
 
@@ -14,13 +13,16 @@ class ProfileContainer extends Component {
   componentDidMount() {
     console.log('comp did mount', this);
     let { userId } = this.props.pageState.auth;
-    this.props.actions.fetchProfile(userId);
+    this.props.dispatch({
+      type: types.PROFILE__REQUESTED,
+      userId
+    });
   }
 
   onChangePasswordHandler(formData) {
-    let { userId } = this.props.pageState.auth;
-    let { currentPassword, newPassword, newPasswordRepeated } = formData;
-    this.props.actions.changePassword(userId, currentPassword, newPassword, newPasswordRepeated);
+    // let { userId } = this.props.pageState.auth;
+    // let { currentPassword, newPassword, newPasswordRepeated } = formData;
+    // this.props.actions.changePassword(userId, currentPassword, newPassword, newPasswordRepeated);
   }
 
   render() {
@@ -42,16 +44,6 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({
-      fetchProfile,
-      changePassword
-    }, dispatch)
-  };
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(ProfileContainer);

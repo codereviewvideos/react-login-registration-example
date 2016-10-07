@@ -5,13 +5,14 @@ import { push } from 'react-router-redux';
 import * as types from '../constants/ActionTypes';
 import { LEVEL } from '../actions/notificationActions';
 import { login } from '../connectivity/api';
+import persistentState from '../utils/localStorage';
 
 function * doLogin(action) {
   try {
 
     console.log('login generator was hit', action);
 
-    let { username, password } = action.payload;
+    const { username, password } = action.payload;
 
     console.log('got me some data', username, password);
 
@@ -19,11 +20,11 @@ function * doLogin(action) {
 
     const responseBody = yield call(login, username, password);
 
-    let token = responseBody.token || '';
-    localStorage.setItem('idToken', token);
+    const token = responseBody.token || '';
+    save('idToken', token);
 
-    let { userId } = jwtDecode(token); // pull out the user data from the JWT
-    localStorage.setItem('profile', {userId, username});
+    const { userId } = jwtDecode(token); // pull out the user data from the JWT
+    save('profile', JSON.stringify({userId, username}));
 
     yield put({type: types.LOGIN__SUCCEEDED, userId, username});
 
@@ -86,7 +87,7 @@ export function * doLogout() {
     type: types.LOGOUT__SUCCESS
   });
 
-  yield put(push('/'));
+  yield put(push('/')); // redirect to /
 }
 
 export function * watchLogout() {
@@ -95,14 +96,18 @@ export function * watchLogout() {
 
 
 
-
-
-
-
-
-
-
 function cleanUp() {
-  localStorage.removeItem('idToken');
-  localStorage.removeItem('profile');
+  persistentState.removeItem('idToken');
+  persistentState.removeItem('profile');
+}
+
+
+/**
+ * things I'd like to keep around even if a browser is closed between now and next time
+ *
+ * @param key
+ * @param value
+ */
+function save(key, value) {
+  persistentState.setItem(key, value);
 }

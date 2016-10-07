@@ -1,11 +1,10 @@
-// import { CALL_API } from '../middlewares/api';
 // import {push} from 'react-router-redux'
 // import {
-//   PROFILE__REQUESTING,
+//   PROFILE__REQUESTED,
 //   PROFILE__SUCCESSFULLY_RECEIVED,
 //   PROFILE__FAILED_RECEIVING,
 //
-//   CHANGE_PASSWORD__REQUESTING,
+//   CHANGE_PASSWORD__REQUESTED,
 //   CHANGE_PASSWORD__SUCCESSFULLY_RECEIVED,
 //   CHANGE_PASSWORD__FAILED_RECEIVING
 // }  from '../constants/ActionTypes';
@@ -19,7 +18,7 @@
 //         method: 'GET',
 //         authenticated: true,
 //         types: [
-//           PROFILE__REQUESTING,
+//           PROFILE__REQUESTED,
 //           PROFILE__SUCCESSFULLY_RECEIVED,
 //           PROFILE__FAILED_RECEIVING
 //         ]
@@ -41,8 +40,8 @@
 //     return actionResponse;
 //   }
 // }
-//
-//
+
+
 // export function changePassword(userId, oldPassword, newPassword, newPasswordRepeated) {
 //   console.log('called change password', userId, oldPassword, newPassword, newPasswordRepeated);
 //   return {
@@ -58,7 +57,7 @@
 //         }
 //       }),
 //       types: [
-//         CHANGE_PASSWORD__REQUESTING,
+//         CHANGE_PASSWORD__REQUESTED,
 //         CHANGE_PASSWORD__SUCCESSFULLY_RECEIVED,
 //         CHANGE_PASSWORD__FAILED_RECEIVING
 //       ]

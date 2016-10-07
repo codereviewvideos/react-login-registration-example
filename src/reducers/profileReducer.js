@@ -1,5 +1,5 @@
 import {
-  PROFILE__REQUESTING,
+  PROFILE__REQUESTED,
   PROFILE__SUCCESSFULLY_RECEIVED,
   PROFILE__FAILED_RECEIVING
 }  from '../constants/ActionTypes';
@@ -8,8 +8,8 @@ export default function profileReducer(state = {}, action) {
 
   switch (action.type) {
 
-    case PROFILE__REQUESTING:
-      console.log('PROFILE__REQUESTING - action', action);
+    case PROFILE__REQUESTED:
+      console.log('PROFILE__REQUESTED - action', action);
       return Object.assign({}, state, {});
 
     case PROFILE__SUCCESSFULLY_RECEIVED:

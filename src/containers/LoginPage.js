@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router'
-import {login} from '../actions/authActions';
 import LoginForm from '../components/LoginForm';
 import * as types from '../constants/ActionTypes';
 import '../styles/login-page.css';
