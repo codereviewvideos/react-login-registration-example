@@ -6,8 +6,8 @@ import {
 
 export default function auth(state = {
   isAuthenticated: !!localStorage.getItem('idToken'),
-  userId: localStorage.getItem('userId'),
-  username: localStorage.getItem('username'),
+  userId: localStorage.getItem('profile') !== null ? localStorage.getItem('profile').userId : undefined,
+  username: localStorage.getItem('profile') !== null ? localStorage.getItem('profile').username : undefined
 }, action) {
 
   switch (action.type) {

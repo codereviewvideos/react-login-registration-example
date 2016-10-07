@@ -5,24 +5,25 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createLogger from 'redux-logger';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
-// import thunkMiddleware from 'redux-thunk';
-// import apiMiddleware from '../middlewares/api';
-// import apiErrorMddleware from '../middlewares/apiError';
 import createSagaMiddleware, { END } from 'redux-saga';
 import { persistState } from 'redux-devtools';
 import rootReducer from '../reducers';
 import DevTools from '../containers/DevTools';
 import sagas from '../sagas';
 
+import { routerMiddleware, push } from 'react-router-redux'
+import { browserHistory } from 'react-router';
 
 const sagaMiddleware = createSagaMiddleware();
 const loggerMiddlware = createLogger();
-
+const routerMw = routerMiddleware(browserHistory);
 
 
 const enhancer = compose(
   // Middleware you want to use in development:
   applyMiddleware(
+
+    routerMw,
 
     // Redux middleware that spits an error on you when you try to mutate your state either inside a dispatch or between dispatches.
     reduxImmutableStateInvariant(),

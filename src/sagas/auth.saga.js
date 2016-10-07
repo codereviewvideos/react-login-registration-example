@@ -20,10 +20,9 @@ function * doLogin(action) {
 
     let token = responseBody.token || '';
     localStorage.setItem('idToken', token);
-    localStorage.setItem('username', username); // already know the username, and should be valid at this point
 
     let { userId } = jwtDecode(token); // pull out the user data from the JWT
-    localStorage.setItem('userId', userId);
+    localStorage.setItem('profile', {userId, username});
 
     yield put({type: types.LOGIN__SUCCEEDED, userId, username});
 
@@ -66,8 +65,7 @@ export function * doLoginFailed(error) {
   });
 
   localStorage.removeItem('idToken');
-  localStorage.removeItem('userId');
-  localStorage.removeItem('username');
+  localStorage.removeItem('profile');
 }
 
 export function * watchLoginFailed() {
