@@ -5,7 +5,6 @@ import {
 } from '../constants/ActionTypes';
 
 export default function auth(state = {
-  sendingRequest: false,
   isAuthenticated: !!localStorage.getItem('idToken'),
   userId: localStorage.getItem('userId'),
   username: localStorage.getItem('username'),
