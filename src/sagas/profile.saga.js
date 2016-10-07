@@ -14,7 +14,10 @@ export function * doRequestProfile(action) {
 
     console.log('got user id', userId);
 
-    yield put({type: types.SENDING_REQUEST, sendingRequest: true});
+    yield put({
+      type: types.SENDING_REQUEST,
+      payload: {sendingRequest: true}
+    });
 
     const responseBody = yield call(fetchProfile, userId);
 
@@ -24,9 +27,11 @@ export function * doRequestProfile(action) {
 
     yield put({
       type: types.PROFILE__SUCCESSFULLY_RECEIVED,
-      id: userId,
-      username,
-      email
+      payload: {
+        id: userId,
+        username,
+        email
+      }
     });
 
   } catch (e) {
@@ -35,12 +40,17 @@ export function * doRequestProfile(action) {
 
     yield put({
       type: types.PROFILE__FAILED_RECEIVING,
-      message: e.message,
-      statusCode: e.statusCode
+      payload: {
+        message: e.message,
+        statusCode: e.statusCode
+      }
     });
 
   } finally {
-    yield put({type: types.SENDING_REQUEST, sendingRequest: false});
+    yield put({
+      type: types.SENDING_REQUEST,
+      payload: {sendingRequest: false}
+    });
   }
 
 }

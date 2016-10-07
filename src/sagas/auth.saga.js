@@ -21,7 +21,7 @@ function * doLogin(action) {
     const responseBody = yield call(login, username, password);
 
     const token = responseBody.token || '';
-    yield call(save, 'idToken', token);
+    yield call(save, 'id_token', token);
 
     const { userId } = jwtDecode(token); // pull out the user data from the JWT
     yield call(save, 'profile', JSON.stringify({userId, username}));

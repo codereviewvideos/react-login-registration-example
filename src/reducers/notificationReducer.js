@@ -5,9 +5,10 @@ import {
 export default function notification(state = {}, action) {
   switch (action.type) {
     case ADD_NOTIFICATION:
+      const { message, level } = action.payload;
       return Object.assign({}, state, {
-        message: action.message,
-        level: action.level
+        message,
+        level
       });
 
     default:

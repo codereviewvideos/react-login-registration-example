@@ -3,8 +3,8 @@ import {reducer as formReducer} from 'redux-form';
 import {routerReducer} from 'react-router-redux';
 import auth from './authReducer';
 import notification from './notificationReducer';
-// import profile from './profileReducer';
-import registration from './registrationReducer';
+import profile from './profileReducer';
+// import registration from './registrationReducer';
 import request from './requestReducer';
 
 const rootReducer = combineReducers({
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   routing: routerReducer,
   auth,
   notification,
-  // profile,
+  profile,
   // registration,
   request
 });

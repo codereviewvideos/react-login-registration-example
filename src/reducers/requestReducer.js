@@ -9,7 +9,7 @@ export default function request(state = {
   switch (action.type) {
     case SENDING_REQUEST:
       return Object.assign({}, state, {
-        sendingRequest: action.sendingRequest
+        sendingRequest: action.payload.sendingRequest
       });
 
     default:

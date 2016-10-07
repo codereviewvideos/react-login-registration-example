@@ -15,7 +15,7 @@ export default function profile(state = {}, action) {
     case PROFILE__SUCCESSFULLY_RECEIVED:
       console.log('PROFILE__SUCCESSFULLY_RECEIVED - action', action);
 
-      let { id, username, email } = action.response;
+      let { id, username, email } = action.payload;
 
       return Object.assign({}, state, {
         id,

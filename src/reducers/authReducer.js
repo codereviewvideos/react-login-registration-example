@@ -18,16 +18,17 @@ export default function auth(state = {
   switch (action.type) {
 
     case LOGIN__SUCCEEDED:
+      const { userId, username } = action.payload;
       return Object.assign({}, state, {
         isAuthenticated: true,
-        userId: action.userId,
-        username: action.username
+        userId,
+        username
       });
 
     case LOGIN__FAILED:
       return Object.assign({}, state, {
         isAuthenticated: false,
-        errorMessage: action.errorMsg
+        errorMessage: action.payload.errorMsg
       });
 
     case LOGOUT__SUCCESS:

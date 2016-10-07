@@ -11,7 +11,7 @@ export function save(key, value) {
 }
 
 export function get(key) {
-  persistentState.getItem(key);
+  return persistentState.getItem(key);
 }
 
 export function cleanUp() {

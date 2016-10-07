@@ -28,6 +28,7 @@ class ProfileContainer extends Component {
   }
 
   render() {
+    console.log('trying to render profile container', this);
 
     let {username, email} = this.props.pageState.profile;
 

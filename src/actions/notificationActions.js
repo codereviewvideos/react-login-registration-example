@@ -10,7 +10,9 @@ export const LEVEL = {
 export default function addNotification(message, level) {
   return {
     type: ADD_NOTIFICATION,
-    message,
-    level
+    payload: {
+      message,
+      level
+    }
   };
 }

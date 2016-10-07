@@ -37,10 +37,13 @@ export async function login(username, password) {
 export async function fetchProfile(userId) {
 
   console.log('api fetch profile', userId);
+  console.log('api fetch ${get(', get('id_token'));
 
   let requestConfig = Object.assign({}, baseRequestConfig, {
-    method: 'POST',
-    body: JSON.stringify({ username, password })
+    headers: {
+      ...baseRequestConfig.headers,
+      'Authorization': `Bearer ${get('id_token')}`
+    }
   });
 
   console.log('req config', requestConfig);
