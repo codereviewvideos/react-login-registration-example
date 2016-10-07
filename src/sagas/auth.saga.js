@@ -2,7 +2,8 @@ import {takeLatest} from 'redux-saga';
 import {call, put} from 'redux-saga/effects';
 import * as types from '../constants/ActionTypes';
 import { LEVEL } from '../actions/notificationActions';
-import { login } from './api';
+import { login } from '../connectivity/api';
+import jwtDecode from 'jwt-decode';
 
 function * doLogin(action) {
   try {
@@ -15,24 +16,26 @@ function * doLogin(action) {
 
     yield put({type: types.SENDING_REQUEST, sendingRequest: true});
 
-    const user = yield call(login, username, password);
+    const responseBody = yield call(login, username, password);
 
-    console.log(' i got me a user', user);
-    yield put({type: types.LOGIN__SUCCEEDED, user});
+    let token = responseBody.token || '';
+    localStorage.setItem('idToken', token);
+    localStorage.setItem('username', username); // already know the username, and should be valid at this point
 
+    let { userId } = jwtDecode(token); // pull out the user data from the JWT
+    localStorage.setItem('userId', userId);
+
+    yield put({type: types.LOGIN__SUCCEEDED, userId, username});
 
   } catch (e) {
 
-
     console.log('it all went wrong', e);
-
 
     yield put({
       type: types.LOGIN__FAILED,
       message: e.message,
       statusCode: e.statusCode
     });
-
 
   } finally {
     yield put({type: types.SENDING_REQUEST, sendingRequest: false});

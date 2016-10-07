@@ -23,6 +23,10 @@ App.propTypes = {
 };
 
 function mapStateToProps(state) {
+
+  console.log('mapStateToProps App', state);
+
+
   return {
     auth: state.auth
   };

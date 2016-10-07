@@ -1,6 +1,6 @@
 import {
   LOGIN__FAILED,
-  LOGIN__SUCCESS,
+  LOGIN__SUCCEEDED,
   LOGOUT__SUCCESS
 } from '../constants/ActionTypes';
 
@@ -12,7 +12,7 @@ export default function auth(state = {
 
   switch (action.type) {
 
-    case LOGIN__SUCCESS:
+    case LOGIN__SUCCEEDED:
       return Object.assign({}, state, {
         isAuthenticated: true,
         userId: action.userId,
