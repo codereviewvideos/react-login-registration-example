@@ -16,7 +16,10 @@ function * doLogin(action) {
 
     console.log('got me some data', username, password);
 
-    yield put({type: types.SENDING_REQUEST, sendingRequest: true});
+    yield put({
+      type: types.SENDING_REQUEST,
+      payload: { sendingRequest: true }
+    });
 
     const responseBody = yield call(login, username, password);
 
@@ -26,7 +29,13 @@ function * doLogin(action) {
     const { userId } = jwtDecode(token); // pull out the user data from the JWT
     yield call(save, 'profile', JSON.stringify({userId, username}));
 
-    yield put({type: types.LOGIN__SUCCEEDED, userId, username});
+    yield put({
+      type: types.LOGIN__SUCCEEDED,
+      payload: {
+        userId,
+        username
+      }
+    });
 
   } catch (e) {
 
@@ -34,12 +43,17 @@ function * doLogin(action) {
 
     yield put({
       type: types.LOGIN__FAILED,
-      message: e.message,
-      statusCode: e.statusCode
+      payload: {
+        message: e.message,
+        statusCode: e.statusCode
+      }
     });
 
   } finally {
-    yield put({type: types.SENDING_REQUEST, sendingRequest: false});
+    yield put({
+      type: types.SENDING_REQUEST,
+      payload: { sendingRequest: false }
+    });
   }
 }
 
@@ -62,8 +76,10 @@ export function * watchLogin() {
 export function * doLoginFailed(error) {
   yield put({
     type: types.ADD_NOTIFICATION,
-    message: error.message,
-    level: LEVEL.ERROR
+    payload: {
+      message: error.message,
+      level: LEVEL.ERROR
+    }
   });
 
   yield call(cleanUp);
