@@ -7,7 +7,8 @@ const baseRequestConfig = {
   method: 'GET',
   mode: 'cors',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${get('id_token')}`
   }
 };
 
@@ -39,16 +40,9 @@ export async function fetchProfile(userId) {
   console.log('api fetch profile', userId);
   console.log('api fetch ${get(', get('id_token'));
 
-  let requestConfig = Object.assign({}, baseRequestConfig, {
-    headers: {
-      ...baseRequestConfig.headers,
-      'Authorization': `Bearer ${get('id_token')}`
-    }
-  });
+  console.log('req config', baseRequestConfig);
 
-  console.log('req config', requestConfig);
-
-  const response = await fetch(`${apiBaseUrl}/profile/${userId}`, requestConfig);
+  const response = await fetch(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
 
   console.log('api fetch profile response', response);
 
