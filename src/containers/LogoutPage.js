@@ -1,19 +1,17 @@
 import { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
-import { logout } from '../actions/authActions'
-import addNotification from '../actions/notificationActions'
+import * as types from '../constants/ActionTypes';
 
 class LogoutPage extends Component {
 
   componentWillMount() {
-    this.props.dispatch(logout());
-    this.props.dispatch(addNotification('Thanks for stopping by!', 'success'));
-    this.props.router.replace('/');
+    this.props.dispatch({
+      type: types.LOGOUT__REQUESTED
+    });
   }
 
   render() {
-    return null
+    return null;
   }
 }
 
@@ -22,4 +20,4 @@ LogoutPage.propTypes = {
   router: PropTypes.object.isRequired
 };
 
-export default connect()(withRouter(LogoutPage))
+export default connect()(LogoutPage);

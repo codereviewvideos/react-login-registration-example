@@ -15,7 +15,9 @@ class ProfileContainer extends Component {
     let { userId } = this.props.pageState.auth;
     this.props.dispatch({
       type: types.PROFILE__REQUESTED,
-      userId
+      payload: {
+        userId
+      }
     });
   }
 

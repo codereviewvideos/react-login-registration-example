@@ -5,7 +5,7 @@ import { push } from 'react-router-redux';
 import * as types from '../constants/ActionTypes';
 import { LEVEL } from '../actions/notificationActions';
 import { login } from '../connectivity/api';
-import persistentState from '../utils/localStorage';
+import { save, cleanUp } from '../connectivity/storage';
 
 function * doLogin(action) {
   try {
@@ -21,10 +21,10 @@ function * doLogin(action) {
     const responseBody = yield call(login, username, password);
 
     const token = responseBody.token || '';
-    save('idToken', token);
+    yield call(save, 'idToken', token);
 
     const { userId } = jwtDecode(token); // pull out the user data from the JWT
-    save('profile', JSON.stringify({userId, username}));
+    yield call(save, 'profile', JSON.stringify({userId, username}));
 
     yield put({type: types.LOGIN__SUCCEEDED, userId, username});
 
@@ -66,7 +66,7 @@ export function * doLoginFailed(error) {
     level: LEVEL.ERROR
   });
 
-  cleanUp();
+  yield call(cleanUp);
 }
 
 export function * watchLoginFailed() {
@@ -81,7 +81,7 @@ export function * watchLoginFailed() {
 
 
 export function * doLogout() {
-  cleanUp();
+  yield call(cleanUp);
 
   yield put({
     type: types.LOGOUT__SUCCESS
@@ -96,18 +96,4 @@ export function * watchLogout() {
 
 
 
-function cleanUp() {
-  persistentState.removeItem('idToken');
-  persistentState.removeItem('profile');
-}
 
-
-/**
- * things I'd like to keep around even if a browser is closed between now and next time
- *
- * @param key
- * @param value
- */
-function save(key, value) {
-  persistentState.setItem(key, value);
-}

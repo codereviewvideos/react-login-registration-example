@@ -45,19 +45,31 @@ export default function auth(state = {
 
 
 function isAuthenticated() {
-  return !!persistentState.getItem('idToken');
+  return !!persistentState.getItem('id_token');
 }
 
 function getUserId() {
-  const profile = persistentState.getItem('profile');
+  try {
 
-  console.log('profile', profile);
-  console.log('profile userId', profile.userId);
+    let profile = persistentState.getItem('profile') || {};
+    profile = JSON.parse(profile);
 
+    return profile.userId;
 
-  return profile !== null ? profile.userId : undefined;
+  } catch (e) {
+    return undefined;
+  }
 }
 
 function getUsername() {
-  return persistentState.getItem('profile') !== null ? persistentState.getItem('profile').username : undefined;
+  try {
+
+    let profile = persistentState.getItem('profile');
+    profile = JSON.parse(profile);
+
+    return profile.username;
+
+  } catch (e) {
+    return undefined;
+  }
 }

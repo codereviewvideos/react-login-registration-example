@@ -18,6 +18,8 @@ export function * doRequestProfile(action) {
 
     const responseBody = yield call(fetchProfile, userId);
 
+    console.log('response body', responseBody);
+
     const { username, email } = responseBody;
 
     yield put({

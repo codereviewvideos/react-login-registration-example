@@ -4,7 +4,7 @@ import {
   PROFILE__FAILED_RECEIVING
 }  from '../constants/ActionTypes';
 
-export default function profileReducer(state = {}, action) {
+export default function profile(state = {}, action) {
 
   switch (action.type) {
 
