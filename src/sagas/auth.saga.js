@@ -1,9 +1,10 @@
 import {takeLatest} from 'redux-saga';
 import {call, put} from 'redux-saga/effects';
+import jwtDecode from 'jwt-decode';
+import { push } from 'react-router-redux';
 import * as types from '../constants/ActionTypes';
 import { LEVEL } from '../actions/notificationActions';
 import { login } from '../connectivity/api';
-import jwtDecode from 'jwt-decode';
 
 function * doLogin(action) {
   try {
@@ -64,11 +65,44 @@ export function * doLoginFailed(error) {
     level: LEVEL.ERROR
   });
 
-  localStorage.removeItem('idToken');
-  localStorage.removeItem('profile');
+  cleanUp();
 }
 
 export function * watchLoginFailed() {
   console.log('am i watch login failed');
   yield* takeLatest(types.LOGIN__FAILED, doLoginFailed);
+}
+
+
+
+
+
+
+
+export function * doLogout() {
+  cleanUp();
+
+  yield put({
+    type: types.LOGOUT__SUCCESS
+  });
+
+  yield put(push('/'));
+}
+
+export function * watchLogout() {
+  yield* takeLatest(types.LOGOUT__REQUESTED, doLogout);
+}
+
+
+
+
+
+
+
+
+
+
+function cleanUp() {
+  localStorage.removeItem('idToken');
+  localStorage.removeItem('profile');
 }

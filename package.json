@@ -41,7 +41,6 @@
     "react-router": "2.8.1",
     "react-router-redux": "4.0.6",
     "redux": "3.5.2",
-    "redux-api-middleware": "1.0.2",
     "redux-auth-wrapper": "0.8.0",
     "redux-form": "6.0.5",
     "redux-saga": "0.12.0",
