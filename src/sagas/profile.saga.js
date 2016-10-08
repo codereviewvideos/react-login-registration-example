@@ -5,14 +5,8 @@ import { fetchProfile } from '../connectivity/api';
 
 
 export function * doRequestProfile(action) {
-
-  console.log('A?A?A?A?A', action);
-
   try {
-
     const { userId } = action.payload;
-
-    console.log('got user id', userId);
 
     yield put({
       type: types.SENDING_REQUEST,
@@ -20,8 +14,6 @@ export function * doRequestProfile(action) {
     });
 
     const responseBody = yield call(fetchProfile, userId);
-
-    console.log('response body', responseBody);
 
     const { username, email } = responseBody;
 
@@ -36,8 +28,6 @@ export function * doRequestProfile(action) {
 
   } catch (e) {
 
-    console.log('it all went wrong', e);
-
     yield put({
       type: types.PROFILE__FAILED_RECEIVING,
       payload: {
@@ -47,10 +37,12 @@ export function * doRequestProfile(action) {
     });
 
   } finally {
+
     yield put({
       type: types.SENDING_REQUEST,
       payload: {sendingRequest: false}
     });
+
   }
 
 }
