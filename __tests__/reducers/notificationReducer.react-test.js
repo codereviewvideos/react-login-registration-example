@@ -4,7 +4,7 @@ import notification from '../../src/reducers/notificationReducer';
 
 describe('Notification Reducer', () => {
   it('has a default state', () => {
-    expect(notification({}, { type: 'unexpected'})).toEqual({});
+    expect(notification(undefined, { type: 'unexpected'})).toEqual({});
   });
 
   it('can handle ADD_NOTIFICATION', () => {

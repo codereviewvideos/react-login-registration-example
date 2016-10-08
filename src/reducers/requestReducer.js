@@ -13,7 +13,6 @@ export default function request(state = {
       });
 
     default:
-      // console.debug('notification reducer :: hit default', action.type);
-      return state;
+      return Object.assign({}, state);
   }
 }

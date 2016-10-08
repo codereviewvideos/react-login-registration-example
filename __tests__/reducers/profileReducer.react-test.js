@@ -4,7 +4,7 @@ import profile from '../../src/reducers/profileReducer';
 
 describe('Profile Reducer', () => {
   it('has a default state', () => {
-    expect(profile({}, { type: 'unexpected'})).toEqual({});
+    expect(profile(undefined, { type: 'unexpected'})).toEqual({});
   });
 
   it('can handle PROFILE__REQUESTED', () => {
