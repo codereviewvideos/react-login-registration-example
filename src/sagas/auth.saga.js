@@ -10,11 +10,11 @@ import { save, cleanUp } from '../connectivity/storage';
 function * doLogin(action) {
   try {
 
-    console.log('login generator was hit', action);
+    // console.log('login generator was hit', action);
 
     const { username, password } = action.payload;
 
-    console.log('got me some data', username, password);
+    // console.log('got me some data', username, password);
 
     yield put({
       type: types.SENDING_REQUEST,
@@ -39,7 +39,7 @@ function * doLogin(action) {
 
   } catch (e) {
 
-    console.log('it all went wrong', e);
+    // console.log('it all went wrong', e);
 
     yield put({
       type: types.LOGIN__FAILED,
