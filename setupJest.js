@@ -1,9 +1,3 @@
-global.fetch = require('jest-fetch-mock');
-
-
-
-
-
 let localStorageMock = (function() {
   let store = {};
   return {

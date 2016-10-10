@@ -4,8 +4,6 @@ import {
 
 export default function notification(state = {}, action) {
 
-  console.log('notification reducer', action);
-
   switch (action.type) {
     case ADD_NOTIFICATION:
       const { message, level } = action.payload;

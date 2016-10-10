@@ -1,5 +1,6 @@
 import { get } from './storage';
 import HttpApiCallError from '../errors/HttpApiCallError';
+import fetchJson from './fetch-json-async-await';
 
 const apiBaseUrl = 'http://api.rest-user-api.dev/app_acceptance.php';
 
@@ -8,7 +9,8 @@ const baseRequestConfig = {
   mode: 'cors',
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${get('id_token')}`
+    // 'Authorization': `Bearer ${get('id_token')}`
+    'Authorization': `Bearer any`
   }
 };
 
@@ -27,7 +29,7 @@ export async function login(username, password) {
     body: JSON.stringify({ username, password })
   });
 
-  const response = await fetch(`${apiBaseUrl}/login`, requestConfig);
+  const response = await fetchJson(`${apiBaseUrl}/login`, requestConfig);
 
   if (!response.ok) {
     throw new HttpApiCallError(response.statusText, response.status);
@@ -45,13 +47,14 @@ export async function login(username, password) {
  */
 export async function fetchProfile(userId) {
 
-  const response = await fetch(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
-
-  if (!response.ok) {
-    throw new HttpApiCallError(response.statusText, response.status);
-  }
-
-  return response.json();
+  return await fetchJson(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
+  // const response = await fetchJson(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
+  //
+  // if (!response.ok) {
+  //   throw new HttpApiCallError(response.statusText, response.status);
+  // }
+  //
+  // return response.json();
 }
 
 
@@ -78,7 +81,7 @@ export async function changePassword(userId, oldPassword, newPassword, newPasswo
     })
   });
 
-  const response = await fetch(`${apiBaseUrl}/password/${userId}/change`, requestConfig);
+  const response = await fetchJson(`${apiBaseUrl}/password/${userId}/change`, requestConfig);
 
   if (!response.ok) {
     throw new HttpApiCallError(response.statusText, response.status);
