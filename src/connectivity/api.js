@@ -37,20 +37,35 @@ export async function login(username, password) {
 
 export async function fetchProfile(userId) {
 
-  console.log('api fetch profile', userId);
-  console.log('api fetch ${get(', get('id_token'));
-
-  console.log('req config', baseRequestConfig);
-
   const response = await fetch(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
-
-  console.log('api fetch profile response', response);
-
 
   if (!response.ok) {
     throw new HttpApiCallError(response.statusText, response.status);
   }
 
   return response.json();
+}
 
+
+export async function changePassword(userId, oldPassword, newPassword, newPasswordRepeated) {
+  console.log('called change password', userId, oldPassword, newPassword, newPasswordRepeated);
+
+  let requestConfig = Object.assign({}, baseRequestConfig, {
+    method: 'POST',
+    body: JSON.stringify({
+      "current_password": oldPassword,
+      "plainPassword": {
+        "first": newPassword,
+        "second": newPasswordRepeated
+      }
+    })
+  });
+
+  const response = await fetch(`${apiBaseUrl}/password/${userId}/change`, requestConfig);
+
+  if (!response.ok) {
+    throw new HttpApiCallError(response.statusText, response.status);
+  }
+
+  return response.json();
 }

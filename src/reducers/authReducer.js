@@ -11,10 +11,6 @@ export default function auth(state = {
   username: getUsername()
 }, action) {
 
-  console.log('isAuthenticated', state.isAuthenticated);
-  console.log('userId', state.userId);
-  console.log('username', state.username);
-
   switch (action.type) {
 
     case LOGIN__SUCCEEDED:

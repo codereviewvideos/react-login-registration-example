@@ -3,7 +3,7 @@ import {call, put} from 'redux-saga/effects';
 import jwtDecode from 'jwt-decode';
 import { push } from 'react-router-redux';
 import * as types from '../constants/ActionTypes';
-import { LEVEL } from '../actions/notificationActions';
+import { LEVEL } from '../constants/NotificationLevels';
 import { login } from '../connectivity/api';
 import { save, cleanUp } from '../connectivity/storage';
 
@@ -86,7 +86,6 @@ export function * doLoginFailed(error) {
 }
 
 export function * watchLoginFailed() {
-  console.log('am i watch login failed');
   yield* takeLatest(types.LOGIN__FAILED, doLoginFailed);
 }
 

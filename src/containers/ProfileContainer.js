@@ -22,9 +22,15 @@ class ProfileContainer extends Component {
   }
 
   onChangePasswordHandler(formData) {
-    // let { userId } = this.props.pageState.auth;
-    // let { currentPassword, newPassword, newPasswordRepeated } = formData;
-    // this.props.actions.changePassword(userId, currentPassword, newPassword, newPasswordRepeated);
+    let { userId } = this.props.pageState.auth;
+    let { currentPassword, newPassword, newPasswordRepeated } = formData;
+
+    this.props.dispatch({
+      type: types.CHANGE_PASSWORD__REQUESTED,
+      payload: {
+        userId
+      }
+    });
   }
 
   render() {
