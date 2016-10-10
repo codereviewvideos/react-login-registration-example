@@ -39,7 +39,7 @@ function * doLogin(action) {
 
   } catch (e) {
 
-    // console.log('it all went wrong', e);
+    console.log('it all went wrong', e, e.message);
 
     yield put({
       type: types.LOGIN__FAILED,
@@ -77,7 +77,7 @@ export function * doLoginFailed(error) {
   yield put({
     type: types.ADD_NOTIFICATION,
     payload: {
-      message: error.message,
+      message: error.payload.message,
       level: LEVEL.ERROR
     }
   });

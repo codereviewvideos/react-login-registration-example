@@ -13,11 +13,13 @@ const baseRequestConfig = {
 };
 
 
-function addAuthorization() {
-  return 'Bearer flflflf';
-}
-
-
+/**
+ * Login
+ *
+ * @param username
+ * @param password
+ * @returns {*}
+ */
 export async function login(username, password) {
 
   let requestConfig = Object.assign({}, baseRequestConfig, {
@@ -35,6 +37,12 @@ export async function login(username, password) {
 }
 
 
+/**
+ * Fetch Profile
+ *
+ * @param userId
+ * @returns {*}
+ */
 export async function fetchProfile(userId) {
 
   const response = await fetch(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
@@ -47,6 +55,15 @@ export async function fetchProfile(userId) {
 }
 
 
+/**
+ * Change Password
+ *
+ * @param userId
+ * @param oldPassword
+ * @param newPassword
+ * @param newPasswordRepeated
+ * @returns {*}
+ */
 export async function changePassword(userId, oldPassword, newPassword, newPasswordRepeated) {
   console.log('called change password', userId, oldPassword, newPassword, newPasswordRepeated);
 

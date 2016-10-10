@@ -1,7 +1,7 @@
 /* eslint-disable no-constant-condition */
 import { take, put, call, fork, select } from 'redux-saga/effects';
 import { watchLogin, watchLoginFailed, watchLogout } from './auth.saga';
-import { watchRequestProfile, watchChangePassword} from './profile.saga';
+import { watchRequestProfile, watchChangePassword, watchFailedChangingPassword } from './profile.saga';
 
 export default function * rootSaga() {
   yield [

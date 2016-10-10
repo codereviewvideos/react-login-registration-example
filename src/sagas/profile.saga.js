@@ -120,3 +120,4 @@ export function * doFailedChangingPassword(error) {
 export function * watchFailedChangingPassword() {
   yield* takeLatest(types.CHANGE_PASSWORD__FAILED_RECEIVING, doFailedChangingPassword);
 }
+

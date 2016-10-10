@@ -81,6 +81,7 @@
     "html-webpack-plugin": "2.22.0",
     "isparta": "4.0.0",
     "jest": "16.0.0",
+    "jest-fetch-mock": "1.0.6",
     "mocha": "3.0.2",
     "mockdate": "1.0.4",
     "node-sass": "3.8.0",
@@ -114,6 +115,10 @@
     "url": ""
   },
   "jest": {
-    "verbose": true
+    "verbose": true,
+    "automock": false,
+    "setupFiles": [
+      ".//setupJest.js"
+    ]
   }
 }
