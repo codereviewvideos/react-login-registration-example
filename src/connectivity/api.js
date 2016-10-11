@@ -9,8 +9,7 @@ const baseRequestConfig = {
   mode: 'cors',
   headers: {
     'Content-Type': 'application/json',
-    // 'Authorization': `Bearer ${get('id_token')}`
-    'Authorization': `Bearer any`
+    'Authorization': `Bearer ${get('id_token')}`
   }
 };
 

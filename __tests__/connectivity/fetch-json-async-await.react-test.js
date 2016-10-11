@@ -3,17 +3,12 @@
 const fetchMock = require('fetch-mock');
 
 import fetchJson  from '../../src/connectivity/fetch-json-async-await';
+import helpers from '../helpers';
 
+// https://github.com/facebook/jest/issues/1377
+// https://github.com/philholden/react-project-archetype/blob/master/init/package.json
+// https://github.com/philholden/flow-tabs
 describe('fetchJson', () => {
-
-  const syncify = async (fn) => {
-    try {
-      const result = await fn();
-      return () => { return result; };
-    } catch (e) {
-      return () => { throw e; };
-    }
-  };
 
   afterEach(() => {
     fetchMock.restore();
@@ -32,15 +27,34 @@ describe('fetchJson', () => {
 
   it('handles errors', async () => {
 
-    fetchMock.get('*', { status: 400, body: JSON.stringify("bad data") });
-
+    fetchMock.get('*', {
+      status: 400,
+      body: JSON.stringify("bad data")
+    });
 
     async function doFetch() {
       return await fetchJson('http://fake.com');
     }
 
-    const syncFunction = await syncify(doFetch);
+    const syncFunction = await helpers.syncify(doFetch);
 
     expect(syncFunction).toThrow();
+  });
+
+
+  it('displays a nicer error message if one is provided', async () => {
+
+    fetchMock.get('*', {
+      status: 403,
+      body: JSON.stringify("bad data")
+    });
+
+    async function doFetch() {
+      return await fetchJson('http://fake.com');
+    }
+
+    const syncFunction = await helpers.syncify(doFetch);
+
+    expect(syncFunction).toThrow('Forbidden');
   });
 });

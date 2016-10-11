@@ -7,7 +7,7 @@ async function fetchJson(url) {
     return data;
   }
 
-  const error = new Error(resp.responseText || 'No response given');
+  const error = new Error(resp.statusText || 'No response given');
   error.data = data || {};
   throw error;
 }
