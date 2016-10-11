@@ -7,8 +7,8 @@ async function fetchAsJson(url) {
     return data;
   }
 
-  const error = new Error(resp.statusText || 'No response given');
-  error.data = data || {};
+  const error = new Error(resp.statusText);
+  error.data = data;
   throw error;
 }
 

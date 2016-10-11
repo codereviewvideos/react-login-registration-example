@@ -67,7 +67,6 @@ export async function fetchProfile(userId) {
  * @returns {*}
  */
 export async function changePassword(userId, oldPassword, newPassword, newPasswordRepeated) {
-  console.log('called change password', userId, oldPassword, newPassword, newPasswordRepeated);
 
   let requestConfig = Object.assign({}, baseRequestConfig, {
     method: 'POST',
