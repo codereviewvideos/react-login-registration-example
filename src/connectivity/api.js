@@ -1,7 +1,8 @@
-import { get } from './storage';
+import * as storage from './storage';
 import HttpApiCallError from '../errors/HttpApiCallError';
-import fetchJson from './fetch-json-async-await';
+import * as asyncFetch from './fetch-json-async-await';
 
+// needs to be extracted
 const apiBaseUrl = 'http://api.rest-user-api.dev/app_acceptance.php';
 
 const baseRequestConfig = {
@@ -9,7 +10,7 @@ const baseRequestConfig = {
   mode: 'cors',
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${get('id_token')}`
+    'Authorization': `Bearer ${storage.get('id_token')}`
   }
 };
 
@@ -28,7 +29,7 @@ export async function login(username, password) {
     body: JSON.stringify({ username, password })
   });
 
-  const response = await fetchJson(`${apiBaseUrl}/login`, requestConfig);
+  const response = await asyncFetch.fetchAsJson(`${apiBaseUrl}/login`, requestConfig);
 
   if (!response.ok) {
     throw new HttpApiCallError(response.statusText, response.status);
@@ -46,14 +47,15 @@ export async function login(username, password) {
  */
 export async function fetchProfile(userId) {
 
-  return await fetchJson(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
-  // const response = await fetchJson(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
-  //
-  // if (!response.ok) {
-  //   throw new HttpApiCallError(response.statusText, response.status);
-  // }
-  //
-  // return response.json();
+  const response = await asyncFetch.fetchAsJson(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
+
+  console.log('response', response);
+
+  if (!response.ok) {
+    throw new HttpApiCallError(response.statusText, response.status);
+  }
+
+  return response.json();
 }
 
 
@@ -80,7 +82,7 @@ export async function changePassword(userId, oldPassword, newPassword, newPasswo
     })
   });
 
-  const response = await fetchJson(`${apiBaseUrl}/password/${userId}/change`, requestConfig);
+  const response = await asyncFetch.fetchAsJson(`${apiBaseUrl}/password/${userId}/change`, requestConfig);
 
   if (!response.ok) {
     throw new HttpApiCallError(response.statusText, response.status);

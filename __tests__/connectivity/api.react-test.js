@@ -4,41 +4,49 @@ jest.mock('../../src/connectivity/fetch-json-async-await.js');
 
 import React from 'react';
 import { fetchProfile } from '../../src/connectivity/api';
+import helpers from '../helpers';
 
 describe('Connectivity', () => {
 
-  it('can fetchProfile', async () => {
+  describe('fetchProfile', () => {
+
+    it('has a happy path', async () => {
+
+      const fetchAsync = require('../../src/connectivity/fetch-json-async-await.js');
+
+      fetchAsync.fetchAsJson = jest.fn(() => { return {
+        ok: true,
+        json: () => 'worked'
+      }});
+
+      let result = await fetchProfile(123);
+
+      expect(result).toEqual('worked');
+    });
 
 
+    it('handles the unhappy path', async () => {
 
-    // let get = jest.fn(() => new Promise(resolve => resolve()));
-    // let fetch = jest.fn(() => new Promise(resolve => resolve()));
+      const fetchAsync = require('../../src/connectivity/fetch-json-async-await.js');
 
-    // fetch.mockResponse('123');
+      fetchAsync.fetchAsJson = jest.fn(() => { return {
+        ok: false,
+        statusText: 'Blew up',
+        status: 400
+      }});
+
+      async function doFetch() {
+        return await fetchProfile(123);
+      }
+
+      const syncFunction = await helpers.syncify(doFetch);
+
+      expect(syncFunction).toThrow('Blew up');
+    });
 
 
-    // fetch.mockResponse('456');
-
-    // try {
-    //   let result = await fetchProfile(1);
-    //
-    //   expect(result).toThrow();
-    // } catch(err) {
-    //   console.log(err);
-    // }
   });
 
 
-  // it('can fetchProfile alt', async () => {
-  //   // fetch.mockResponse(JSON.stringify({ a: true, b: "worked" }));
-  //
-  //   const fetch = jest.fn(() => { return { hello: "world" }});
-  //
-  //   let result = await fetchProfile(1);
-  //
-  //   console.log('result', result);
-  //
-  //   expect(result).toEqual(true);
-  // });
 });
 

@@ -1,4 +1,4 @@
-async function fetchJson(url) {
+async function fetchAsJson(url) {
   const resp = await fetch(url);
   const data = await resp.json();
   const isSuccess = resp.status >= 200 && resp.status < 300;
@@ -12,4 +12,6 @@ async function fetchJson(url) {
   throw error;
 }
 
-export default fetchJson;
+export default {
+  fetchAsJson
+};

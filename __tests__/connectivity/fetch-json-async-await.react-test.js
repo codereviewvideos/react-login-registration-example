@@ -2,7 +2,7 @@
 
 const fetchMock = require('fetch-mock');
 
-import fetchJson  from '../../src/connectivity/fetch-json-async-await';
+import fetchAsync from '../../src/connectivity/fetch-json-async-await';
 import helpers from '../helpers';
 
 // https://github.com/facebook/jest/issues/1377
@@ -19,7 +19,7 @@ describe('fetchJson', () => {
 
     fetchMock.get('*', {hello: 'world'});
 
-    let result = await fetchJson('http://fake.com');
+    let result = await fetchAsync.fetchAsJson('http://fake.com');
 
     expect(result.hello).toEqual("world");
   });
@@ -33,7 +33,7 @@ describe('fetchJson', () => {
     });
 
     async function doFetch() {
-      return await fetchJson('http://fake.com');
+      return await fetchAsync.fetchAsJson('http://fake.com');
     }
 
     const syncFunction = await helpers.syncify(doFetch);
@@ -50,7 +50,7 @@ describe('fetchJson', () => {
     });
 
     async function doFetch() {
-      return await fetchJson('http://fake.com');
+      return await fetchAsync.fetchAsJson('http://fake.com');
     }
 
     const syncFunction = await helpers.syncify(doFetch);
