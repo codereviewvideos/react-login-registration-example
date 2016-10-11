@@ -49,8 +49,6 @@ export async function fetchProfile(userId) {
 
   const response = await asyncFetch.fetchAsJson(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
 
-  console.log('response', response);
-
   if (!response.ok) {
     throw new HttpApiCallError(response.statusText, response.status);
   }
