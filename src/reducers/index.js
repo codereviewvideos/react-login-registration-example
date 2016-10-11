@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import * as redux from 'redux';
 import {reducer as formReducer} from 'redux-form';
 import {routerReducer} from 'react-router-redux';
 import auth from './authReducer';
@@ -7,7 +7,7 @@ import profile from './profileReducer';
 // import registration from './registrationReducer';
 import request from './requestReducer';
 
-const rootReducer = combineReducers({
+const rootReducer = redux.combineReducers({
   form: formReducer,
   routing: routerReducer,
   auth,

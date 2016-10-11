@@ -50,8 +50,4 @@ describe('Auth Reducer', () => {
     expect(auth({}, action)).toEqual(expectedOutcome);
   });
 
-
-
-
 });
-
