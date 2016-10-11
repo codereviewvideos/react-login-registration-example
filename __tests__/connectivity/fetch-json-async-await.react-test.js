@@ -3,7 +3,7 @@
 const fetchMock = require('fetch-mock');
 
 import fetchAsync from '../../src/connectivity/fetch-json-async-await';
-import helpers from '../helpers';
+import helpers from '../../setupJest';
 
 // https://github.com/facebook/jest/issues/1377
 // https://github.com/philholden/react-project-archetype/blob/master/init/package.json

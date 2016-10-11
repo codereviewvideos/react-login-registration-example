@@ -7,9 +7,26 @@ let localStorageMock = (function() {
     setItem: function(key, value) {
       store[key] = value.toString();
     },
-    clear: function() {
-      store = {};
+    removeItem: function(key) {
+      delete store[key];
     }
   };
 })();
 Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+
+
+
+
+
+const syncify = async (fn) => {
+  try {
+    const result = await fn();
+    return () => { return result; };
+  } catch (e) {
+    return () => { throw e; };
+  }
+};
+
+export default {
+  syncify
+}

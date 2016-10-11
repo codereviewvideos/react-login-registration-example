@@ -119,8 +119,9 @@
     "setupFiles": [
       "./setupJest.js"
     ],
-    "modulePathIgnorePatterns": [
-      "./__tests__/helpers.js"
+    "coveragePathIgnorePatterns": [
+      "/setupJest.js",
+      "/utils/localStorage.js"
     ]
   }
 }

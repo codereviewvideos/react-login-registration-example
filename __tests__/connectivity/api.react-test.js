@@ -5,7 +5,7 @@ jest.mock('../../src/connectivity/fetch-json-async-await.js');
 
 import React from 'react';
 import { login, fetchProfile, changePassword } from '../../src/connectivity/api';
-import helpers from '../helpers';
+import helpers from '../../setupJest';
 
 describe('Connectivity', () => {
 
