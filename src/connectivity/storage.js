@@ -1,4 +1,4 @@
-import persistentState from '../utils/localStorage';
+import * as persistentState from '../utils/localStorage';
 
 /**
  * things I'd like to keep around even if a browser is closed between now and next time
@@ -17,4 +17,10 @@ export function get(key) {
 export function cleanUp() {
   persistentState.removeItem('id_token');
   persistentState.removeItem('profile');
+}
+
+export default {
+  save,
+  get,
+  cleanUp
 }

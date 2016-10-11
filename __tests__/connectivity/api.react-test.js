@@ -8,8 +8,6 @@ import helpers from '../helpers';
 
 describe('Connectivity', () => {
 
-  const apiBaseUrl = 'http://api.rest-user-api.dev/app_acceptance.php';
-
   describe('login', () => {
 
     it('has a happy path', async () => {
