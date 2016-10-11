@@ -1,4 +1,4 @@
-exports[`test Can see home page 1`] = `
+exports[`HomePage renders as expected 1`] = `
 <div>
   <h2
     className="alt-header">

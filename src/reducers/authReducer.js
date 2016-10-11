@@ -24,7 +24,7 @@ export default function auth(state = {
     case LOGIN__FAILED:
       return Object.assign({}, state, {
         isAuthenticated: false,
-        errorMessage: action.payload.errorMsg
+        errorMessage: action.payload.message
       });
 
     case LOGOUT__SUCCESS:
