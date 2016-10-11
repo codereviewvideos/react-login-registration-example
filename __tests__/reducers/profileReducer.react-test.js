@@ -28,5 +28,33 @@ describe('Profile Reducer', () => {
     let action = { type: types.PROFILE__FAILED_RECEIVING };
     expect(profile({}, action)).toEqual({});
   });
+
+
+
+
+
+
+
+  it('can handle CHANGE_PASSWORD__REQUESTED', () => {
+    let action = { type: types.CHANGE_PASSWORD__REQUESTED };
+    expect(profile({}, action)).toEqual({});
+  });
+
+  it('can handle CHANGE_PASSWORD__SUCCESSFULLY_RECEIVED', () => {
+    let action = {
+      type: types.CHANGE_PASSWORD__SUCCESSFULLY_RECEIVED,
+      payload: {
+        id: 123,
+        username: 'chris',
+        email: 'chris@codereviewvideos.com'
+      }
+    };
+    expect(profile({}, action)).toEqual(action.payload);
+  });
+
+  it('can handle CHANGE_PASSWORD__FAILED_RECEIVING', () => {
+    let action = { type: types.CHANGE_PASSWORD__FAILED_RECEIVING };
+    expect(profile({}, action)).toEqual({});
+  });
 });
 
