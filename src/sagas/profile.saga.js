@@ -1,8 +1,8 @@
 import {takeLatest} from 'redux-saga';
 import {call, put} from 'redux-saga/effects';
 import * as types from '../constants/ActionTypes';
-import { LEVEL } from '../constants/NotificationLevels';
-import { fetchProfile, changePassword } from '../connectivity/api';
+import LEVEL from '../constants/NotificationLevels';
+import * as api from '../connectivity/api';
 
 
 export function * doRequestProfile(action) {
@@ -14,7 +14,7 @@ export function * doRequestProfile(action) {
       payload: {sendingRequest: true}
     });
 
-    const responseBody = yield call(fetchProfile, userId);
+    const responseBody = yield call(api.fetchProfile, userId);
 
     const { username, email } = responseBody;
 
@@ -61,14 +61,14 @@ export function * watchRequestProfile() {
 
 export function * doChangePassword(action) {
   try {
-    const { userId } = action.payload;
+    const { userId, oldPassword, newPassword, newPasswordRepeated } = action.payload;
 
     yield put({
       type: types.SENDING_REQUEST,
       payload: {sendingRequest: true}
     });
 
-    const responseBody = yield call(changePassword, userId);
+    const responseBody = yield call(api.changePassword, userId, oldPassword, newPassword, newPasswordRepeated);
 
     const { message } = responseBody;
 
