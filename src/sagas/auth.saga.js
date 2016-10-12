@@ -4,30 +4,26 @@ import jwtDecode from 'jwt-decode';
 import { push } from 'react-router-redux';
 import * as types from '../constants/ActionTypes';
 import { LEVEL } from '../constants/NotificationLevels';
-import { login } from '../connectivity/api';
-import { save, cleanUp } from '../connectivity/storage';
+import * as api from '../connectivity/api';
+import * as storage from '../connectivity/storage';
 
-function * doLogin(action) {
+export function * doLogin(action) {
   try {
 
-    // console.log('login generator was hit', action);
-
     const { username, password } = action.payload;
-
-    // console.log('got me some data', username, password);
 
     yield put({
       type: types.SENDING_REQUEST,
       payload: { sendingRequest: true }
     });
 
-    const responseBody = yield call(login, username, password);
+    const responseBody = yield call(api.login, username, password);
 
     const token = responseBody.token || '';
-    yield call(save, 'id_token', token);
+    yield call(storage.save, 'id_token', token);
 
     const { userId } = jwtDecode(token); // pull out the user data from the JWT
-    yield call(save, 'profile', JSON.stringify({userId, username}));
+    yield call(storage.save, 'profile', JSON.stringify({userId, username}));
 
     yield put({
       type: types.LOGIN__SUCCEEDED,
@@ -65,7 +61,6 @@ function * doLogin(action) {
  and only the latest one will be run.
  */
 export function * watchLogin() {
-  console.log('am i watch login#?' );
   yield* takeLatest(types.LOGIN__REQUESTED, doLogin);
 }
 
@@ -82,7 +77,7 @@ export function * doLoginFailed(error) {
     }
   });
 
-  yield call(cleanUp);
+  yield call(storage.cleanUp);
 }
 
 export function * watchLoginFailed() {
@@ -96,7 +91,7 @@ export function * watchLoginFailed() {
 
 
 export function * doLogout() {
-  yield call(cleanUp);
+  yield call(storage.cleanUp);
 
   yield put({
     type: types.LOGOUT__SUCCESS
