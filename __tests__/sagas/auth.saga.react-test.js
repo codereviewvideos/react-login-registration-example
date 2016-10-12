@@ -6,9 +6,12 @@ jest.mock('jwt-decode', () => {
 
 import {call, put} from 'redux-saga/effects';
 import * as types from '../../src/constants/ActionTypes';
-// import {takeLatest} from 'redux-saga';
+import {takeLatest} from 'redux-saga';
+import { push } from 'react-router-redux';
 import * as authSaga from '../../src/sagas/auth.saga';
 import * as storage from '../../src/connectivity/storage';
+import LEVEL from '../../src/constants/NotificationLevels';
+
 
 describe('Auth Saga', () => {
 
@@ -180,7 +183,68 @@ describe('Auth Saga', () => {
         })
       );
     });
+  });
 
 
+  describe('doLoginFailed', () => {
+    it('behaves as expected', () => {
+
+      const generator = authSaga.doLoginFailed({ payload: {
+        message: 'something went badly wrong'
+      }});
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put({
+          type: types.ADD_NOTIFICATION,
+          payload: {
+            message: 'something went badly wrong',
+            level: LEVEL.ERROR
+          }
+        })
+      );
+
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        call(storage.cleanUp)
+      );
+
+      expect(generator.next().done).toBeTruthy();
+    });
+  });
+
+
+  describe('doLogout', () => {
+    it('behaves as expected', () => {
+
+      const generator = authSaga.doLogout();
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        call(storage.cleanUp)
+      );
+
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put({
+          type: types.LOGOUT__SUCCESS
+        })
+      );
+
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put(push('/'))
+      );
+
+      expect(generator.next().done).toBeTruthy();
+    });
   });
 });

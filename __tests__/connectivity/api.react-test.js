@@ -3,7 +3,6 @@
 jest.mock('../../src/connectivity/storage.js');
 jest.mock('../../src/connectivity/fetch-json-async-await.js');
 
-import React from 'react';
 import { login, fetchProfile, changePassword } from '../../src/connectivity/api';
 import helpers from '../../setupJest';
 

@@ -3,7 +3,7 @@ import {call, put} from 'redux-saga/effects';
 import jwtDecode from 'jwt-decode';
 import { push } from 'react-router-redux';
 import * as types from '../constants/ActionTypes';
-import { LEVEL } from '../constants/NotificationLevels';
+import LEVEL from '../constants/NotificationLevels';
 import * as api from '../connectivity/api';
 import * as storage from '../connectivity/storage';
 
@@ -20,14 +20,15 @@ export function * doLogin(action) {
     const responseBody = yield call(api.login, username, password);
 
     const { token } = responseBody;
-
     if (token === undefined) {
       throw new Error('Cannot continue. Unable to find a valid token in the login response.');
     }
-
     yield call(storage.save, 'id_token', token);
 
     const { userId } = jwtDecode(token); // pull out the user data from the JWT
+    if (userId === undefined) {
+      throw new Error('Cannot continue. Unable to find a user ID in the decoded JWT token.');
+    }
     yield call(storage.save, 'profile', JSON.stringify({userId, username}));
 
     yield put({
