@@ -12,59 +12,175 @@ import * as storage from '../../src/connectivity/storage';
 
 describe('Auth Saga', () => {
 
-  it('doLogin - happy path', () => {
+  describe('doLogin', () => {
 
-    let val;
+    it('has a happy path', () => {
 
-    const generator = authSaga.doLogin({ payload: {
-      username: 'tim',
-      password: 'timpass'
-    }});
+      const generator = authSaga.doLogin({ payload: {
+        username: 'tim',
+        password: 'timpass'
+      }});
 
-    expect(
-      generator.next().value
-    ).toEqual(
-      put({
-        type: types.SENDING_REQUEST,
-        payload: { sendingRequest: true }
-      })
-    );
-
-
-    const api = require('../../src/connectivity/api');
-
-    expect(
-      generator.next().value
-    ).toEqual(
-      call(api.login, 'tim', 'timpass')
-    );
+      expect(
+        generator.next().value
+      ).toEqual(
+        put({
+          type: types.SENDING_REQUEST,
+          payload: { sendingRequest: true }
+        })
+      );
 
 
-    let fakeResponseBody = { token: 'some-token' };
+      const api = require('../../src/connectivity/api');
 
-    expect(
-      generator.next(fakeResponseBody).value
-    ).toEqual(
-      call(storage.save, 'id_token', 'some-token')
-    );
-
-
-    expect(
-      generator.next().value
-    ).toEqual(
-      call(storage.save, 'profile', JSON.stringify({userId: 456, username: 'tim'}))
-    );
+      expect(
+        generator.next().value
+      ).toEqual(
+        call(api.login, 'tim', 'timpass')
+      );
 
 
-    expect(
-      generator.next().value
-    ).toEqual(
-      put({
-        type: types.LOGIN__SUCCEEDED,
-        payload: {userId: 456, username: 'tim'}
-      })
-    );
+      let fakeResponseBody = { token: 'some-token' };
+
+      expect(
+        generator.next(fakeResponseBody).value
+      ).toEqual(
+        call(storage.save, 'id_token', 'some-token')
+      );
+
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        call(storage.save, 'profile', JSON.stringify({userId: 456, username: 'tim'}))
+      );
+
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put({
+          type: types.LOGIN__SUCCEEDED,
+          payload: {userId: 456, username: 'tim'}
+        })
+      );
+
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put({
+          type: types.SENDING_REQUEST,
+          payload: { sendingRequest: false }
+        })
+      );
+
+    });
+
+
+    it('throws when call to api.login fails', () => {
+
+      const generator = authSaga.doLogin({ payload: {
+        username: 'tim',
+        password: 'timpass'
+      }});
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put({
+          type: types.SENDING_REQUEST,
+          payload: { sendingRequest: true }
+        })
+      );
+
+
+      const api = require('../../src/connectivity/api');
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        call(api.login, 'tim', 'timpass')
+      );
+
+
+      expect(
+        generator.throw({
+          message: 'something went wrong',
+          statusCode: 123
+        }).value
+      ).toEqual(
+        put({
+          type: types.LOGIN__FAILED,
+          payload: {
+            message: 'something went wrong',
+            statusCode: 123
+          }
+        })
+      );
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put({
+          type: types.SENDING_REQUEST,
+          payload: { sendingRequest: false }
+        })
+      );
+    });
+
+
+    it('throws when cannot find a token in responseBody', () => {
+
+      const generator = authSaga.doLogin({ payload: {
+        username: 'tim',
+        password: 'timpass'
+      }});
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put({
+          type: types.SENDING_REQUEST,
+          payload: { sendingRequest: true }
+        })
+      );
+
+
+      const api = require('../../src/connectivity/api');
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        call(api.login, 'tim', 'timpass')
+      );
+
+
+      let fakeResponseBody = { bad: 'response' };
+
+      expect(
+        generator.next(fakeResponseBody).value
+      ).toEqual(
+        put({
+          type: types.LOGIN__FAILED,
+          payload: {
+            message: 'Cannot continue. Unable to find a valid token in the login response.',
+            statusCode: undefined
+          }
+        })
+      );
+
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put({
+          type: types.SENDING_REQUEST,
+          payload: { sendingRequest: false }
+        })
+      );
+    });
+
 
   });
-
 });

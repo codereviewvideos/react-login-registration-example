@@ -19,7 +19,12 @@ export function * doLogin(action) {
 
     const responseBody = yield call(api.login, username, password);
 
-    const token = responseBody.token || '';
+    const { token } = responseBody;
+
+    if (token === undefined) {
+      throw new Error('Cannot continue. Unable to find a valid token in the login response.');
+    }
+
     yield call(storage.save, 'id_token', token);
 
     const { userId } = jwtDecode(token); // pull out the user data from the JWT
@@ -34,8 +39,6 @@ export function * doLogin(action) {
     });
 
   } catch (e) {
-
-    console.log('it all went wrong', e, e.message);
 
     yield put({
       type: types.LOGIN__FAILED,
