@@ -2,13 +2,13 @@
 
 jest.mock('../../src/utils/localStorage');
 
-import * as storage from '../../src/connectivity/storage';
+import storage from '../../src/connectivity/storage';
 
 describe('storage', () => {
 
   it('can save', () => {
 
-    const mockStorage = require('../../src/utils/localStorage');
+    const mockStorage = require('../../src/utils/localStorage').default;
     mockStorage.setItem = jest.fn(() => true);
 
     storage.save('key', 'value');
@@ -18,7 +18,7 @@ describe('storage', () => {
 
   it('can get', () => {
 
-    const mockStorage = require('../../src/utils/localStorage');
+    const mockStorage = require('../../src/utils/localStorage').default;
     mockStorage.getItem = jest.fn(() => true);
 
     storage.get('key');
@@ -28,7 +28,7 @@ describe('storage', () => {
 
   it('can cleanUp', () => {
 
-    const mockStorage = require('../../src/utils/localStorage');
+    const mockStorage = require('../../src/utils/localStorage').default;
     mockStorage.removeItem = jest.fn(() => true);
 
     storage.cleanUp();

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import NavBar from '../components/NavBar';
 import NotificationContainer from './NotificationContainer';
+import "babel-polyfill";
+
 
 const App = (props) => (
   <div>
