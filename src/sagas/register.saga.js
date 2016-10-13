@@ -47,3 +47,35 @@ export function * doRegister(action) {
 export function * watchRegister() {
   yield* takeLatest(types.REGISTRATION__RREQUESTED, doRegister);
 }
+
+
+
+export function * doSuccessfullyRegistered(action) {
+  yield put({
+    type: types.ADD_NOTIFICATION,
+    payload: {
+      message: action.payload.message,
+      level: LEVEL.SUCCESS
+    }
+  });
+}
+
+export function * watchSucceededChangingPassword() {
+  yield* takeLatest(types.REGISTRATION__SUCCESSFULLY_RECEIVED, doSuccessfullyRegistered);
+}
+
+
+
+export function * doFailedRegistration(action) {
+  yield put({
+    type: types.ADD_NOTIFICATION,
+    payload: {
+      message: action.payload.message,
+      level: LEVEL.ERROR
+    }
+  });
+}
+
+export function * watchFailedRegistering() {
+  yield* takeLatest(types.REGISTRATION__FAILED_RECEIVING, doFailedRegistration);
+}

@@ -126,4 +126,54 @@ describe('Registration Saga', () => {
     });
   });
 
+
+  describe('doSuccessfullyRegistered', () => {
+
+    it('behaves as expected', () => {
+
+      const generator = registrationSaga.doSuccessfullyRegistered({
+        payload: { message: 'it worked!' }
+      });
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put({
+          type: types.ADD_NOTIFICATION,
+          payload: {
+            message: 'it worked!',
+            level: LEVEL.SUCCESS
+          }
+        })
+      );
+
+    });
+
+  });
+
+
+  describe('doFailedRegistration', () => {
+
+    it('behaves as expected', () => {
+
+      const generator = registrationSaga.doFailedRegistration({
+        payload: { message: 'whoops!' }
+      });
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put({
+          type: types.ADD_NOTIFICATION,
+          payload: {
+            message: 'whoops!',
+            level: LEVEL.ERROR
+          }
+        })
+      );
+
+    });
+
+  });
+
 });
