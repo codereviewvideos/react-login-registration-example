@@ -68,3 +68,30 @@ export async function changePassword(userId, currentPassword, newPassword, newPa
 
   return await asyncFetch.fetchAsJson(`${apiBaseUrl}/password/${userId}/change`, requestConfig);
 }
+
+
+/**
+ * Register
+ *
+ * @param username
+ * @param email
+ * @param password
+ * @param passwordRepeated
+ * @returns {*}
+ */
+export async function register(username, email, password, passwordRepeated) {
+
+  let requestConfig = Object.assign({}, baseRequestConfig, {
+    method: 'POST',
+    body: JSON.stringify({
+      username,
+      email,
+      plainPassword: {
+        first: password,
+        second: passwordRepeated
+      }
+    })
+  });
+
+  return await asyncFetch.fetchAsJson(`${apiBaseUrl}/register`, requestConfig);
+}

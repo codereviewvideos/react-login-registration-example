@@ -79,5 +79,35 @@ describe('Connectivity', () => {
   });
 
 
+  describe('register', () => {
+
+    it('has a happy path', async () => {
+
+      const asyncFetch = require('../../src/connectivity/fetch-json-async-await.js').default;
+      asyncFetch.fetchAsJson = jest.fn(() => 'worked' );
+
+      let result = await api.register('bob', 'bob@test.com', 'testpass', 'testpass');
+      expect(result).toEqual('worked');
+
+      let url = asyncFetch.fetchAsJson.mock.calls[0][0];
+      expect(url).toEqual('http://api.rest-user-api.dev/app_acceptance.php/register');
+
+      let requestConfig = asyncFetch.fetchAsJson.mock.calls[0][1];
+      let body = JSON.stringify({
+        username: 'bob',
+        email: 'bob@test.com',
+        plainPassword: {
+          first: "testpass",
+          second: "testpass"
+        }
+      });
+
+      expect(requestConfig.body).toEqual(body);
+      expect(requestConfig.method).toEqual('POST');
+    });
+
+  });
+
+
 });
 
