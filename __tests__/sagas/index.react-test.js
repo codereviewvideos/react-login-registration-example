@@ -9,6 +9,7 @@ describe('Root Saga', () => {
 
     const authSaga = require('../../src/sagas/auth.saga');
     const profileSaga = require('../../src/sagas/profile.saga');
+    const registrationSaga = require('../../src/sagas/register.saga');
 
     const generator = rootSaga();
 
@@ -23,7 +24,11 @@ describe('Root Saga', () => {
         fork(profileSaga.watchRequestProfile),
         fork(profileSaga.watchChangePassword),
         fork(profileSaga.watchSucceededChangingPassword),
-        fork(profileSaga.watchFailedChangingPassword)
+        fork(profileSaga.watchFailedChangingPassword),
+
+        fork(registrationSaga.watchRegister),
+        fork(registrationSaga.watchSucceededChangingPassword),
+        fork(registrationSaga.watchFailedRegistering),
       ]
     );
 
