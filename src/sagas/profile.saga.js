@@ -3,7 +3,8 @@ import {call, put} from 'redux-saga/effects';
 import * as types from '../constants/ActionTypes';
 import LEVEL from '../constants/NotificationLevels';
 import * as api from '../connectivity/api';
-
+import { startSubmit, stopSubmit } from 'redux-form';
+import { SubmissionError } from 'redux-form';  // ES6
 
 export function * doRequestProfile(action) {
   try {
@@ -55,8 +56,14 @@ export function * watchRequestProfile() {
 
 
 export function * doChangePassword(action) {
+
+  console.log('doChangePassword action', action);
+
+  const { userId, currentPassword, newPassword, newPasswordRepeated, resolve, reject } = action.payload;
+
   try {
-    const { userId, currentPassword, newPassword, newPasswordRepeated } = action.payload;
+
+    yield put(startSubmit('change-password'));
 
     yield put({
       type: types.SENDING_REQUEST,
@@ -82,6 +89,13 @@ export function * doChangePassword(action) {
       }
     });
 
+    yield put(stopSubmit('change-password', {
+      _error: {currentPassword: 'some errors'},
+      error: {currentPassword: 'bbbb'},
+      currentPassword: 'bbbb',
+      errors: {currentPassword: 'aaa'}
+    }));
+
   } finally {
 
     yield put({
@@ -90,7 +104,6 @@ export function * doChangePassword(action) {
     });
 
   }
-
 }
 
 export function * watchChangePassword() {

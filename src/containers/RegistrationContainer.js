@@ -1,21 +1,26 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { register } from '../actions/registrationActions';
 import RegistrationForm from '../components/RegistrationForm';
+import * as types from '../constants/ActionTypes';
 
-class RegistrationContainer extends Component {
+class RegistrationContainer extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
   onRegisterHandler(formData) {
-    console.log('registration container :: on register handler', formData);
-
     let { username, emailAddress, password, passwordRepeated } = formData;
 
-    this.props.actions.register(username, emailAddress, password, passwordRepeated);
+    this.props.dispatch({
+      type: types.REGISTRATION__RREQUESTED,
+      payload: {
+        username,
+        email: emailAddress,
+        password,
+        passwordRepeated
+      }
+    });
   }
 
   render() {
@@ -33,15 +38,6 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({
-      register
-    }, dispatch)
-  };
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(RegistrationContainer);

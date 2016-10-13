@@ -40,6 +40,8 @@ export async function login(username, password) {
  */
 export async function fetchProfile(userId) {
 
+  console.log('base conf', baseRequestConfig);
+
   return await asyncFetch.fetchAsJson(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
 }
 

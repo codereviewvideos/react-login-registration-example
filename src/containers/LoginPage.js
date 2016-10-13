@@ -8,7 +8,6 @@ import '../styles/login-page.css';
 export class LoginPage extends Component {
 
   doLogin(formData) {
-    console.log('do login');
     this.props.dispatch({
       type: types.LOGIN__REQUESTED,
       payload: {

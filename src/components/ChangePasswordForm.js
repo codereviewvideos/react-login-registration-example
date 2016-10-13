@@ -1,26 +1,50 @@
-import React  from 'react';
+import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 // import '../styles/change-password-form.css';
 
-const ChangePasswordForm = (props) => {
 
-  const { handleSubmit } = props;
+const renderField = ({ input, label, type, meta: { touched, error } }) => {
+
+  console.log('render Field', input, label, type, touched, error);
 
   return (
-    <form className="form-change-password" onSubmit={handleSubmit(props.onSubmit)}>
+  <div>
+    <label>{label}</label>
+    <div>
+      <input {...input} placeholder={label} type={type} className="form-control"/>
+      {touched && error && <span>{error}</span>}
+    </div>
+  </div>
+  );
+}
+
+
+
+const ChangePasswordForm = (props) => {
+
+  console.log('ChangePasswordForm props', props);
+
+  // <Field component={React.DOM.input}
+  //        type="password"
+  //        name="currentPassword"
+  //        className="form-control"
+  //        placeholder="Current Password"
+  //        autoCorrect="off"
+  //        autoCapitalize="off"
+  //        spellCheck="false"
+  //        required />
+
+  return (
+    <form className="form-change-password" onSubmit={props.handleSubmit}>
 
       <h2 className="form-change-password-heading">Change Password</h2>
 
       <label htmlFor="currentPassword" className="sr-only">Current Password</label>
-      <Field component="input"
-             type="password"
+      <Field component={renderField}
              name="currentPassword"
-             className="form-control"
-             placeholder="Current Password"
-             autoCorrect="off"
-             autoCapitalize="off"
-             spellCheck="false"
-             required />
+            type="password"
+             label="Current Password"
+      />
 
       <label htmlFor="newPassword" className="sr-only">Password</label>
       <Field component="input"
@@ -42,10 +66,11 @@ const ChangePasswordForm = (props) => {
 
     </form>
   );
+
 };
 
 ChangePasswordForm.propTypes = {
-  onSubmit: React.PropTypes.func.isRequired
+  handleSubmit: React.PropTypes.func.isRequired
 };
 
 // Decorate the form component

@@ -1,10 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import ProfilePage from '../components/ProfilePage';
 import ChangePasswordForm from '../components/ChangePasswordForm';
 import * as types from '../constants/ActionTypes';
 
-class ProfileContainer extends Component {
+class ProfileContainer extends React.Component {
 
   constructor(props) {
     super(props);
@@ -21,11 +21,12 @@ class ProfileContainer extends Component {
     });
   }
 
-  onChangePasswordHandler(formData) {
+  handleChangePassword(formData) {
+    console.log('onChangePasswordHandler',formData );
     let { userId } = this.props.pageState.auth;
     let { currentPassword, newPassword, newPasswordRepeated } = formData;
 
-    this.props.dispatch({
+    return this.props.dispatch({
       type: types.CHANGE_PASSWORD__REQUESTED,
       payload: {
         userId,
@@ -34,6 +35,7 @@ class ProfileContainer extends Component {
         newPasswordRepeated
       }
     });
+
   }
 
   render() {
@@ -44,7 +46,7 @@ class ProfileContainer extends Component {
     return (
       <div>
         <ProfilePage username={username} emailAddress={email} />
-        <ChangePasswordForm onSubmit={this.onChangePasswordHandler.bind(this)}/>
+        <ChangePasswordForm onSubmit={this.handleChangePassword.bind(this)}/>
       </div>
     );
   }
