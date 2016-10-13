@@ -19,6 +19,8 @@ export function * doLogin(action) {
 
     const responseBody = yield call(api.login, username, password);
 
+    console.log('res bodyu', responseBody);
+
     const { token } = responseBody;
     if (token === undefined) {
       throw new Error('Cannot continue. Unable to find a valid token in the login response.');
@@ -40,6 +42,8 @@ export function * doLogin(action) {
     });
 
   } catch (e) {
+
+    console.log('caught e', e);
 
     yield put({
       type: types.LOGIN__FAILED,

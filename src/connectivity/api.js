@@ -1,5 +1,4 @@
 import * as storage from './storage';
-import HttpApiCallError from '../errors/HttpApiCallError';
 import asyncFetch from './fetch-json-async-await';
 
 // needs to be extracted
@@ -29,13 +28,7 @@ export async function login(username, password) {
     body: JSON.stringify({ username, password })
   });
 
-  const response = await asyncFetch.fetchAsJson(`${apiBaseUrl}/login`, requestConfig);
-
-  if (!response.ok) {
-    throw new HttpApiCallError(response.statusText, response.status);
-  }
-
-  return response.json();
+  return await asyncFetch.fetchAsJson(`${apiBaseUrl}/login`, requestConfig);
 }
 
 
@@ -47,13 +40,7 @@ export async function login(username, password) {
  */
 export async function fetchProfile(userId) {
 
-  const response = await asyncFetch.fetchAsJson(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
-
-  if (!response.ok) {
-    throw new HttpApiCallError(response.statusText, response.status);
-  }
-
-  return response.json();
+  return await asyncFetch.fetchAsJson(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
 }
 
 
@@ -79,11 +66,5 @@ export async function changePassword(userId, oldPassword, newPassword, newPasswo
     })
   });
 
-  const response = await asyncFetch.fetchAsJson(`${apiBaseUrl}/password/${userId}/change`, requestConfig);
-
-  if (!response.ok) {
-    throw new HttpApiCallError(response.statusText, response.status);
-  }
-
-  return response.json();
+  return await asyncFetch.fetchAsJson(`${apiBaseUrl}/password/${userId}/change`, requestConfig);
 }
