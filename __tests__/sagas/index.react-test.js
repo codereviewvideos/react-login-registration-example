@@ -22,6 +22,7 @@ describe('Root Saga', () => {
 
         fork(profileSaga.watchRequestProfile),
         fork(profileSaga.watchChangePassword),
+        fork(profileSaga.watchSucceededChangingPassword),
         fork(profileSaga.watchFailedChangingPassword)
       ]
     );

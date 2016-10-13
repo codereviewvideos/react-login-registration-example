@@ -28,7 +28,10 @@ class ProfileContainer extends Component {
     this.props.dispatch({
       type: types.CHANGE_PASSWORD__REQUESTED,
       payload: {
-        userId
+        userId,
+        currentPassword,
+        newPassword,
+        newPasswordRepeated
       }
     });
   }

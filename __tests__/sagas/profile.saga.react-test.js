@@ -126,7 +126,7 @@ describe('Profile Saga', () => {
     it('has a happy path', () => {
 
       const userId = 435,
-        oldPassword = 'oldpass',
+        currentPassword = 'oldpass',
         newPassword = 'newpass',
         newPasswordRepeated = 'newpass'
         ;
@@ -134,7 +134,7 @@ describe('Profile Saga', () => {
       const generator = profileSaga.doChangePassword({
         payload: {
           userId,
-          oldPassword,
+          currentPassword,
           newPassword,
           newPasswordRepeated
         }
@@ -155,7 +155,7 @@ describe('Profile Saga', () => {
       expect(
         generator.next().value
       ).toEqual(
-        call(api.changePassword, userId, oldPassword, newPassword, newPasswordRepeated)
+        call(api.changePassword, userId, currentPassword, newPassword, newPasswordRepeated)
       );
 
 
@@ -167,7 +167,7 @@ describe('Profile Saga', () => {
         put({
           type: types.CHANGE_PASSWORD__SUCCESSFULLY_RECEIVED,
           payload: {
-            message: fakeResponseBody.message
+            message: fakeResponseBody
           }
         })
       );
@@ -187,7 +187,7 @@ describe('Profile Saga', () => {
     it('throws when call to api.changePassword fails', () => {
 
       const userId = 435,
-        oldPassword = 'oldpass',
+        currentPassword = 'oldpass',
         newPassword = 'newpass',
         newPasswordRepeated = 'newpass'
         ;
@@ -195,7 +195,7 @@ describe('Profile Saga', () => {
       const generator = profileSaga.doChangePassword({
         payload: {
           userId,
-          oldPassword,
+          currentPassword,
           newPassword,
           newPasswordRepeated
         }
@@ -216,7 +216,7 @@ describe('Profile Saga', () => {
       expect(
         generator.next().value
       ).toEqual(
-        call(api.changePassword, userId, oldPassword, newPassword, newPasswordRepeated)
+        call(api.changePassword, userId, currentPassword, newPassword, newPasswordRepeated)
       );
 
 
@@ -248,12 +248,37 @@ describe('Profile Saga', () => {
   });
 
 
+  describe('doSucceededChangingPassword', () => {
+
+    it('behaves as expected', () => {
+
+      const generator = profileSaga.doSucceededChangingPassword({
+        payload: { message: 'it worked!' }
+      });
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put({
+          type: types.ADD_NOTIFICATION,
+          payload: {
+            message: 'it worked!',
+            level: LEVEL.SUCCESS
+          }
+        })
+      );
+
+    });
+
+  });
+
+
   describe('doFailedChangingPassword', () => {
 
     it('behaves as expected', () => {
 
       const generator = profileSaga.doFailedChangingPassword({
-        message: 'whoops!'
+        payload: { message: 'whoops!' }
       });
 
       expect(

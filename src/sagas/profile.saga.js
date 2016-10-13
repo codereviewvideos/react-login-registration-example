@@ -54,28 +54,21 @@ export function * watchRequestProfile() {
 
 
 
-
-
-
-
-
 export function * doChangePassword(action) {
   try {
-    const { userId, oldPassword, newPassword, newPasswordRepeated } = action.payload;
+    const { userId, currentPassword, newPassword, newPasswordRepeated } = action.payload;
 
     yield put({
       type: types.SENDING_REQUEST,
       payload: {sendingRequest: true}
     });
 
-    const responseBody = yield call(api.changePassword, userId, oldPassword, newPassword, newPasswordRepeated);
-
-    const { message } = responseBody;
+    const responseBody = yield call(api.changePassword, userId, currentPassword, newPassword, newPasswordRepeated);
 
     yield put({
       type: types.CHANGE_PASSWORD__SUCCESSFULLY_RECEIVED,
       payload: {
-        message
+        message: responseBody
       }
     });
 
@@ -107,11 +100,27 @@ export function * watchChangePassword() {
 
 
 
-export function * doFailedChangingPassword(error) {
+export function * doSucceededChangingPassword(action) {
   yield put({
     type: types.ADD_NOTIFICATION,
     payload: {
-      message: error.message,
+      message: action.payload.message,
+      level: LEVEL.SUCCESS
+    }
+  });
+}
+
+export function * watchSucceededChangingPassword() {
+  yield* takeLatest(types.CHANGE_PASSWORD__SUCCESSFULLY_RECEIVED, doSucceededChangingPassword);
+}
+
+
+
+export function * doFailedChangingPassword(action) {
+  yield put({
+    type: types.ADD_NOTIFICATION,
+    payload: {
+      message: action.payload.message,
       level: LEVEL.ERROR
     }
   });

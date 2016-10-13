@@ -11,6 +11,7 @@ export default function * rootSaga() {
 
     fork(profileSaga.watchRequestProfile),
     fork(profileSaga.watchChangePassword),
+    fork(profileSaga.watchSucceededChangingPassword),
     fork(profileSaga.watchFailedChangingPassword)
   ];
 };

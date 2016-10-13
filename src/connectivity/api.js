@@ -48,17 +48,17 @@ export async function fetchProfile(userId) {
  * Change Password
  *
  * @param userId
- * @param oldPassword
+ * @param currentPassword
  * @param newPassword
  * @param newPasswordRepeated
  * @returns {*}
  */
-export async function changePassword(userId, oldPassword, newPassword, newPasswordRepeated) {
+export async function changePassword(userId, currentPassword, newPassword, newPasswordRepeated) {
 
   let requestConfig = Object.assign({}, baseRequestConfig, {
     method: 'POST',
     body: JSON.stringify({
-      "current_password": oldPassword,
+      "current_password": currentPassword,
       "plainPassword": {
         "first": newPassword,
         "second": newPasswordRepeated

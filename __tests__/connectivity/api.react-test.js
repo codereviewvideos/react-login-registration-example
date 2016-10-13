@@ -58,13 +58,13 @@ describe('Connectivity', () => {
       const asyncFetch = require('../../src/connectivity/fetch-json-async-await.js').default;
       asyncFetch.fetchAsJson = jest.fn(() => 'worked');
 
-      let result = await api.changePassword(123, 'oldpass', 'newpass', 'newpass');
+      let result = await api.changePassword(123, 'currentPassword', 'newpass', 'newpass');
       expect(result).toEqual('worked');
 
       let url = asyncFetch.fetchAsJson.mock.calls[0][0];
       let requestConfig = asyncFetch.fetchAsJson.mock.calls[0][1];
       let body = JSON.stringify({
-        "current_password": 'oldpass',
+        "current_password": 'currentPassword',
         "plainPassword": {
           "first": 'newpass',
           "second": 'newpass'
