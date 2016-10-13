@@ -1,6 +1,6 @@
 import * as storage from './storage';
 import HttpApiCallError from '../errors/HttpApiCallError';
-import * as asyncFetch from './fetch-json-async-await';
+import asyncFetch from './fetch-json-async-await';
 
 // needs to be extracted
 const apiBaseUrl = 'http://api.rest-user-api.dev/app_acceptance.php';
