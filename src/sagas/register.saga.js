@@ -14,23 +14,19 @@ export function * doRegister(action) {
       payload: {sendingRequest: true}
     });
 
-    const responseBody = yield call(api.re, userId);
-
-    const { username, email } = responseBody;
+    const responseBody = yield call(api.register, username, email, password, passwordRepeated);
 
     yield put({
-      type: types.PROFILE__SUCCESSFULLY_RECEIVED,
+      type: types.REGISTRATION__SUCCESSFULLY_RECEIVED,
       payload: {
-        id: userId,
-        username,
-        email
+        message: responseBody
       }
     });
 
   } catch (e) {
 
     yield put({
-      type: types.PROFILE__FAILED_RECEIVING,
+      type: types.REGISTRATION__FAILED_RECEIVING,
       payload: {
         message: e.message,
         statusCode: e.statusCode
