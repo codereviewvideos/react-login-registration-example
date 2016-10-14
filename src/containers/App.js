@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import NavBar from '../components/NavBar';
 import NotificationContainer from './NotificationContainer';
+import font from 'font-awesome/css/font-awesome.css';
 import "babel-polyfill";
 
 

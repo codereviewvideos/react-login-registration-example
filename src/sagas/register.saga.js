@@ -20,8 +20,6 @@ export function *doRegister(action) {
 
     const {msg, token} = yield call(api.register, username, email, password, passwordRepeated);
 
-    console.log('regi', msg, token);
-
     yield put({
       type: types.REGISTRATION__SUCCESSFULLY_RECEIVED,
       payload: {

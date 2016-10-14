@@ -8,6 +8,9 @@ import '../styles/login-page.css';
 class LoginPage extends Component {
 
   componentWillReceiveProps(newProps) {
+
+    console.log('got some new props', newProps);
+
     if (newProps.pageState.auth.isAuthenticated) {
       this.props.router.replace('/');
     }
@@ -24,9 +27,15 @@ class LoginPage extends Component {
   }
 
   render() {
+
+    console.log('rendering', this.props.pageState.request.sendingRequest);
+
     return (
       <div>
-        <LoginForm onSubmit={this.doLogin.bind(this)}/>
+        <LoginForm
+          onSubmit={this.doLogin.bind(this)}
+          isSubmitting={!!this.props.pageState.request.sendingRequest}
+        />
       </div>
     );
   }

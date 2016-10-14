@@ -26,7 +26,10 @@ class RegistrationContainer extends React.Component {
   render() {
     return (
       <div>
-        <RegistrationForm onSubmit={this.onRegisterHandler.bind(this)}/>
+        <RegistrationForm
+          onSubmit={this.onRegisterHandler.bind(this)}
+          isSubmitting={this.props.pageState.request.sendingRequest}
+        />
       </div>
     );
   }
