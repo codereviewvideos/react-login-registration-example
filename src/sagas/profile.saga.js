@@ -57,9 +57,8 @@ export function * watchRequestProfile() {
 
 export function * doChangePassword(action) {
 
-  console.log('doChangePassword action', action);
-
   const { userId, currentPassword, newPassword, newPasswordRepeated, resolve, reject } = action.payload;
+  let errors = {};
 
   try {
 
@@ -91,9 +90,9 @@ export function * doChangePassword(action) {
       }
     });
 
-    yield put(stopSubmit('change-password', {
-      currentPassword: formErrorHelper(e.data, 'children.current_password.errors[0]')
-    }));
+    errors = {
+      currentPassword: yield call(formErrorHelper, e.data, 'children.current_password.errors[0]')
+    };
 
   } finally {
 
@@ -102,7 +101,7 @@ export function * doChangePassword(action) {
       payload: {sendingRequest: false}
     });
 
-    // yield put(stopSubmit('change-password'));
+    yield put(stopSubmit('change-password', errors));
 
   }
 }

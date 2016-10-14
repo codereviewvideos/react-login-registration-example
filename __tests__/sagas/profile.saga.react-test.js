@@ -1,12 +1,11 @@
 jest.mock('../../src/connectivity/storage.js');
 jest.mock('../../src/connectivity/api.js');
 
-import {takeLatest} from 'redux-saga';
 import {call, put} from 'redux-saga/effects';
 import * as types from '../../src/constants/ActionTypes';
 import * as profileSaga from '../../src/sagas/profile.saga';
 import LEVEL from '../../src/constants/NotificationLevels';
-
+import { startSubmit, stopSubmit } from 'redux-form';
 
 describe('Profile Saga', () => {
 
@@ -63,6 +62,8 @@ describe('Profile Saga', () => {
           payload: {sendingRequest: false}
         })
       );
+
+      expect(generator.next().done).toBeTruthy();
     });
 
 
@@ -117,6 +118,8 @@ describe('Profile Saga', () => {
           payload: {sendingRequest: false}
         })
       );
+
+      expect(generator.next().done).toBeTruthy();
     });
   });
 
@@ -139,6 +142,12 @@ describe('Profile Saga', () => {
           newPasswordRepeated
         }
       });
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put(startSubmit('change-password'))
+      );
 
       const api = require('../../src/connectivity/api');
 
@@ -181,6 +190,14 @@ describe('Profile Saga', () => {
           payload: {sendingRequest: false}
         })
       );
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put(stopSubmit('change-password', {}))
+      );
+
+      expect(generator.next().done).toBeTruthy();
     });
 
 
@@ -200,6 +217,13 @@ describe('Profile Saga', () => {
           newPasswordRepeated
         }
       });
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put(startSubmit('change-password'))
+      );
+
 
       const api = require('../../src/connectivity/api');
 
@@ -244,6 +268,8 @@ describe('Profile Saga', () => {
           payload: {sendingRequest: false}
         })
       );
+
+      expect(generator.next().done).toBeTruthy();
     });
   });
 
@@ -268,6 +294,7 @@ describe('Profile Saga', () => {
         })
       );
 
+      expect(generator.next().done).toBeTruthy();
     });
 
   });
@@ -293,6 +320,7 @@ describe('Profile Saga', () => {
         })
       );
 
+      expect(generator.next().done).toBeTruthy();
     });
 
   });
