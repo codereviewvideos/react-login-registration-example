@@ -11,8 +11,6 @@ export default function *rootSaga() {
     fork(authSaga.watchLoginFailed),
     fork(authSaga.watchLogout),
 
-    fork(notificationSaga.watchNotification),
-
     fork(profileSaga.watchRequestProfile),
     fork(profileSaga.watchChangePassword),
     fork(profileSaga.watchSucceededChangingPassword),

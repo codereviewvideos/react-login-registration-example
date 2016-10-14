@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import * as types from '../constants/ActionTypes';
 import NotificationSystem from 'react-notification-system';
 
 class NotificationContainer extends React.Component {
@@ -15,13 +14,9 @@ class NotificationContainer extends React.Component {
 
   componentWillReceiveProps(newProps) {
     const {message, level} = newProps.notification;
-
-    return this.props.dispatch({
-      type: types.ADD_NOTIFICATION,
-      payload: {
-        message,
-        level
-      }
+    this.notificationSystem.addNotification({
+      message,
+      level
     });
   }
 
@@ -33,8 +28,7 @@ class NotificationContainer extends React.Component {
 }
 
 NotificationContainer.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  notification: PropTypes.object.isRequired
+  notification: PropTypes.object
 };
 
 function mapStateToProps(state) {

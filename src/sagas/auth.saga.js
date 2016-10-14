@@ -73,6 +73,7 @@ export function *watchLogin() {
 
 
 export function *doLoginFailed(error) {
+  console.log('putting out an add notificationm');
   yield put({
     type: types.ADD_NOTIFICATION,
     payload: {
