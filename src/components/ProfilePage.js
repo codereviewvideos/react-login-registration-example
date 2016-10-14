@@ -13,8 +13,8 @@ const ProfilePage = (props) => {
 };
 
 ProfilePage.propTypes = {
-  emailAddress: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired
+  emailAddress: PropTypes.string,
+  username: PropTypes.string
 };
 
 export default ProfilePage;

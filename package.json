@@ -30,6 +30,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "classnames": "^2.2.5",
     "jwt-decode": "2.1.0",
     "lodash": "^4.16.4",
     "object-assign": "4.1.0",

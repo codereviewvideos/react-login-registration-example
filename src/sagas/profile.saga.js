@@ -80,17 +80,21 @@ export function *doChangePassword(action) {
 
   } catch (e) {
 
-    yield put({
-      type: types.CHANGE_PASSWORD__FAILED_RECEIVING,
-      payload: {
-        message: e.message,
-        statusCode: e.statusCode
-      }
-    });
+
+    // yield put({
+    //   type: types.CHANGE_PASSWORD__FAILED_RECEIVING,
+    //   payload: {
+    //     message: e.message,
+    //     statusCode: e.statusCode
+    //   }
+    // });
 
     errors = {
       currentPassword: yield call(formErrorHelper, e.data, 'children.current_password.errors[0]')
     };
+
+    console.log('error monkey', errors);
+
 
   } finally {
 

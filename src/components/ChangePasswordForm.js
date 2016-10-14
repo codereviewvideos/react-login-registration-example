@@ -23,28 +23,29 @@ const ChangePasswordForm = (props) => {
 
       <h2 className="form-change-password-heading">Change Password</h2>
 
-      <label htmlFor="currentPassword" className="sr-only">Current Password</label>
       <Field component={FormField}
              name="currentPassword"
+             id="currentPassword"
              type="password"
-             label="Current Password"
+             placeholder="Current Password"
+             required="required"
       />
 
-      <label htmlFor="newPassword" className="sr-only">Password</label>
-      <Field component="input"
-             type="password"
+      <Field component={FormField}
              name="newPassword"
-             className="form-control"
-             placeholder="New Password"
-             required />
-
-      <label htmlFor="newPasswordRepeated" className="sr-only">Password (Repeated)</label>
-      <Field component="input"
+             id="newPassword"
              type="password"
+             placeholder="New Password"
+             required="required"
+      />
+
+      <Field component={FormField}
              name="newPasswordRepeated"
-             className="form-control"
-             placeholder="Password Repeated"
-             required />
+             id="newPasswordRepeated"
+             type="password"
+             placeholder="New Password Repeated"
+             required="required"
+      />
 
       <button className="btn btn-lg btn-primary btn-block"
               type="submit"
