@@ -1,10 +1,10 @@
 /* eslint-disable no-constant-condition */
-import { fork } from 'redux-saga/effects';
+import {fork} from 'redux-saga/effects';
 import * as authSaga from './auth.saga';
 import * as profileSaga from './profile.saga';
 import * as registrationSaga from './register.saga';
 
-export default function * rootSaga() {
+export default function *rootSaga() {
   yield [
     fork(authSaga.watchLogin),
     fork(authSaga.watchLoginFailed),
@@ -19,4 +19,4 @@ export default function * rootSaga() {
     fork(registrationSaga.watchSucceededChangingPassword),
     fork(registrationSaga.watchFailedRegistering),
   ];
-};
+}

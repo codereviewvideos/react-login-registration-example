@@ -2,17 +2,16 @@
 // This boilerplate file is likely to be the same for each project that uses Redux.
 // With Redux, the actual stores are in /reducers.
 
-import { createStore, applyMiddleware, compose } from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import createLogger from 'redux-logger';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
-import createSagaMiddleware, { END } from 'redux-saga';
-import { persistState } from 'redux-devtools';
+import createSagaMiddleware, {END} from 'redux-saga';
+import {persistState} from 'redux-devtools';
 import rootReducer from '../reducers';
 import DevTools from '../containers/DevTools';
 import sagas from '../sagas';
-
-import { routerMiddleware, push } from 'react-router-redux'
-import { browserHistory } from 'react-router';
+import {routerMiddleware} from 'react-router-redux';
+import {browserHistory} from 'react-router';
 
 const sagaMiddleware = createSagaMiddleware();
 const loggerMiddlware = createLogger();

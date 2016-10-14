@@ -5,9 +5,9 @@ import LEVEL from '../constants/NotificationLevels';
 import * as api from '../connectivity/api';
 
 
-export function * doRegister(action) {
+export function *doRegister(action) {
   try {
-    const { username, email, password, passwordRepeated } = action.payload;
+    const {username, email, password, passwordRepeated} = action.payload;
 
     yield put({
       type: types.SENDING_REQUEST,
@@ -44,13 +44,13 @@ export function * doRegister(action) {
 
 }
 
-export function * watchRegister() {
+export function *watchRegister() {
   yield* takeLatest(types.REGISTRATION__RREQUESTED, doRegister);
 }
 
 
 
-export function * doSuccessfullyRegistered(action) {
+export function *doSuccessfullyRegistered(action) {
   yield put({
     type: types.ADD_NOTIFICATION,
     payload: {
@@ -60,13 +60,13 @@ export function * doSuccessfullyRegistered(action) {
   });
 }
 
-export function * watchSucceededChangingPassword() {
+export function *watchSucceededChangingPassword() {
   yield* takeLatest(types.REGISTRATION__SUCCESSFULLY_RECEIVED, doSuccessfullyRegistered);
 }
 
 
 
-export function * doFailedRegistration(action) {
+export function *doFailedRegistration(action) {
   yield put({
     type: types.ADD_NOTIFICATION,
     payload: {
@@ -76,6 +76,6 @@ export function * doFailedRegistration(action) {
   });
 }
 
-export function * watchFailedRegistering() {
+export function *watchFailedRegistering() {
   yield* takeLatest(types.REGISTRATION__FAILED_RECEIVING, doFailedRegistration);
 }
