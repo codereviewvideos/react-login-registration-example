@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 const ProfilePage = (props) => {
   return (
@@ -10,6 +10,11 @@ const ProfilePage = (props) => {
       </ul>
     </div>
   );
+};
+
+ProfilePage.propTypes = {
+  emailAddress: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired
 };
 
 export default ProfilePage;

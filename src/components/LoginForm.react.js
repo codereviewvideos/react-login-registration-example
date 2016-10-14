@@ -1,10 +1,10 @@
 import React  from 'react';
-import { Field, reduxForm } from 'redux-form';
+import {Field, reduxForm} from 'redux-form';
 // import '../styles/login-page.css';
 
 const LoginForm = (props) => {
 
-  const { handleSubmit } = props;
+  const {handleSubmit} = props;
 
   return (
       <form className="form-signin" onSubmit={handleSubmit(props.onSubmit)}>
@@ -37,6 +37,7 @@ const LoginForm = (props) => {
 };
 
 LoginForm.propTypes = {
+  handleSubmit: React.PropTypes.func.isRequired,
   onSubmit: React.PropTypes.func.isRequired
 };
 

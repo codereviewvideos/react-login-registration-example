@@ -1,25 +1,10 @@
-import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import React, {PropTypes} from 'react';
+import {Field, reduxForm} from 'redux-form';
+import FormField from './FormField';
 // import '../styles/change-password-form.css';
 
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => {
-  return (
-  <div>
-    <label>{label}</label>
-    <div>
-      <input {...input} placeholder={label} type={type} className="form-control"/>
-      {touched && error && <span>{error}</span>}
-    </div>
-  </div>
-  );
-};
-
-
-
 const ChangePasswordForm = (props) => {
-
-  console.log('change password form props', props);
 
   // <Field component={React.DOM.input}
   //        type="password"
@@ -39,7 +24,7 @@ const ChangePasswordForm = (props) => {
       <h2 className="form-change-password-heading">Change Password</h2>
 
       <label htmlFor="currentPassword" className="sr-only">Current Password</label>
-      <Field component={renderField}
+      <Field component={FormField}
              name="currentPassword"
              type="password"
              label="Current Password"
@@ -64,19 +49,21 @@ const ChangePasswordForm = (props) => {
       <button className="btn btn-lg btn-primary btn-block"
               type="submit"
               disabled={submitting}>
-        { submitting
-          ? <i className="fa fa-spin fa-spinner"></i>
-          : null
-        }
+
         Change Password</button>
 
     </form>
   );
 
+  // { submitting
+  //   ? <i className="fa fa-spin fa-spinner"></i>
+  //   : null
+  // }
+
 };
 
 ChangePasswordForm.propTypes = {
-  handleSubmit: React.PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired
 };
 
 // Decorate the form component
