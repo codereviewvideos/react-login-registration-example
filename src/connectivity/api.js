@@ -25,7 +25,7 @@ export async function login(username, password) {
 
   let requestConfig = Object.assign({}, baseRequestConfig, {
     method: 'POST',
-    body: JSON.stringify({ username, password })
+    body: JSON.stringify({username, password})
   });
 
   return await asyncFetch.fetchAsJson(`${apiBaseUrl}/login`, requestConfig);

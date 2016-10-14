@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import NavBar from '../components/NavBar';
 import NotificationContainer from './NotificationContainer';
 import "babel-polyfill";
@@ -19,7 +19,8 @@ const App = (props) => (
 );
 
 App.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
+  auth: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

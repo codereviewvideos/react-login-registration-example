@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, IndexLink } from 'react-router';
+import React, {PropTypes} from 'react';
+import {Link, IndexLink} from 'react-router';
 
 const NavBar = (props) => {
 
@@ -42,12 +42,16 @@ const NavBar = (props) => {
             <li><Link to="/profile">Profile</Link></li>
           </ul>
 
-          { loginOrProfile }
+          {loginOrProfile}
 
         </div>
       </div>
     </nav>
   );
+};
+
+NavBar.propTypes = {
+  auth: PropTypes.object.isRequired
 };
 
 export default NavBar;

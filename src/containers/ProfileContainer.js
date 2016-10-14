@@ -33,7 +33,6 @@ class ProfileContainer extends React.Component {
         newPasswordRepeated
       }
     });
-
   }
 
   render() {

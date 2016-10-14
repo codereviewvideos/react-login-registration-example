@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import RegistrationForm from '../components/RegistrationForm';
 import * as types from '../constants/ActionTypes';
 
@@ -10,7 +10,7 @@ class RegistrationContainer extends React.Component {
   }
 
   onRegisterHandler(formData) {
-    let { username, emailAddress, password, passwordRepeated } = formData;
+    let {username, emailAddress, password, passwordRepeated} = formData;
 
     this.props.dispatch({
       type: types.REGISTRATION__RREQUESTED,
@@ -31,6 +31,10 @@ class RegistrationContainer extends React.Component {
     );
   }
 }
+
+RegistrationContainer.propTypes = {
+  dispatch: PropTypes.func.isRequired
+};
 
 function mapStateToProps(state) {
   return {

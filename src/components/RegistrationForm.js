@@ -1,10 +1,10 @@
 import React  from 'react';
-import { Field, reduxForm } from 'redux-form';
+import {Field, reduxForm} from 'redux-form';
 // import '../styles/change-password-form.css';
 
 const RegistrationForm = (props) => {
 
-  const { handleSubmit } = props;
+  const {handleSubmit} = props;
 
   return (
     <form className="form-registration" onSubmit={handleSubmit(props.onSubmit)}>
@@ -50,7 +50,8 @@ const RegistrationForm = (props) => {
 };
 
 RegistrationForm.propTypes = {
-  onSubmit: React.PropTypes.func.isRequired
+  onSubmit: React.PropTypes.func.isRequired,
+  handleSubmit: React.PropTypes.func.isRequired
 };
 
 // Decorate the form component

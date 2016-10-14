@@ -1,10 +1,9 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import addNotification from '../actions/notificationActions';
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
+import * as types from '../constants/ActionTypes';
 import NotificationSystem from 'react-notification-system';
 
-class NotificationContainer extends Component {
+class NotificationContainer extends React.Component {
 
   constructor(props) {
     super(props);
@@ -15,10 +14,14 @@ class NotificationContainer extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const { message, level } = newProps.notification;
-    this.notificationSystem.addNotification({
-      message,
-      level
+    const {message, level} = newProps.notification;
+
+    return this.props.dispatch({
+      type: types.ADD_NOTIFICATION,
+      payload: {
+        message,
+        level
+      }
     });
   }
 
@@ -29,21 +32,17 @@ class NotificationContainer extends Component {
   }
 }
 
+NotificationContainer.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  notification: PropTypes.object.isRequired
+};
+
 function mapStateToProps(state) {
   return {
     notification: state.notification
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({
-      addNotification
-    }, dispatch)
-  };
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(NotificationContainer);
