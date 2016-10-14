@@ -13,27 +13,31 @@ export default function auth(state = {
 
   switch (action.type) {
 
-    case LOGIN__SUCCEEDED:
-      const { userId, username } = action.payload;
+    case LOGIN__SUCCEEDED: {
+      const {userId, username} = action.payload;
       return Object.assign({}, state, {
         isAuthenticated: true,
         userId,
         username
       });
+    }
 
-    case LOGIN__FAILED:
+    case LOGIN__FAILED: {
       return Object.assign({}, state, {
         isAuthenticated: false,
         errorMessage: action.payload.message
       });
+    }
 
-    case LOGOUT__SUCCESS:
+    case LOGOUT__SUCCESS: {
       return Object.assign({}, {
         isAuthenticated: false
       });
+    }
 
-    default:
+    default: {
       return state;
+    }
   }
 }
 
