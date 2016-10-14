@@ -10,10 +10,10 @@ class RegistrationContainer extends React.Component {
   }
 
   onRegisterHandler(formData) {
-    let {username, emailAddress, password, passwordRepeated} = formData;
+    const {username, emailAddress, password, passwordRepeated} = formData;
 
     this.props.dispatch({
-      type: types.REGISTRATION__RREQUESTED,
+      type: types.REGISTRATION__REQUESTED,
       payload: {
         username,
         email: emailAddress,

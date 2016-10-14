@@ -4,14 +4,25 @@ import asyncFetch from './fetch-json-async-await';
 // needs to be extracted
 const apiBaseUrl = 'http://api.rest-user-api.dev/app_acceptance.php';
 
-const baseRequestConfig = {
-  method: 'GET',
-  mode: 'cors',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${storage.get('id_token')}`
-  }
+
+
+const getBaseRequestConfig = () => {
+
+  console.log('storage', storage);
+
+  const idToken = storage.get('id_token');
+  console.log('got token', idToken);
+
+  return {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    }
+  };
 };
+
 
 
 /**
@@ -23,7 +34,9 @@ const baseRequestConfig = {
  */
 export async function login(username, password) {
 
-  let requestConfig = Object.assign({}, baseRequestConfig, {
+  const baseRequestConfig = getBaseRequestConfig();
+
+  const requestConfig = Object.assign({}, baseRequestConfig, {
     method: 'POST',
     body: JSON.stringify({username, password})
   });
@@ -39,7 +52,10 @@ export async function login(username, password) {
  * @returns {*}
  */
 export async function fetchProfile(userId) {
-  return await asyncFetch.fetchAsJson(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
+
+  const requestConfig = getBaseRequestConfig();
+
+  return await asyncFetch.fetchAsJson(`${apiBaseUrl}/profile/${userId}`, requestConfig);
 }
 
 
@@ -54,7 +70,9 @@ export async function fetchProfile(userId) {
  */
 export async function changePassword(userId, currentPassword, newPassword, newPasswordRepeated) {
 
-  let requestConfig = Object.assign({}, baseRequestConfig, {
+  const baseRequestConfig = getBaseRequestConfig();
+
+  const requestConfig = Object.assign({}, baseRequestConfig, {
     method: 'POST',
     body: JSON.stringify({
       "current_password": currentPassword,
@@ -80,7 +98,9 @@ export async function changePassword(userId, currentPassword, newPassword, newPa
  */
 export async function register(username, email, password, passwordRepeated) {
 
-  let requestConfig = Object.assign({}, baseRequestConfig, {
+  const baseRequestConfig = getBaseRequestConfig();
+
+  const requestConfig = Object.assign({}, baseRequestConfig, {
     method: 'POST',
     body: JSON.stringify({
       username,
@@ -91,6 +111,8 @@ export async function register(username, email, password, passwordRepeated) {
       }
     })
   });
+
+  delete requestConfig.headers.Authorization;
 
   return await asyncFetch.fetchAsJson(`${apiBaseUrl}/register`, requestConfig);
 }

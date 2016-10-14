@@ -1,8 +1,4 @@
-import {
-  LOGIN__FAILED,
-  LOGIN__SUCCEEDED,
-  LOGOUT__SUCCESS
-} from '../constants/ActionTypes';
+import * as types from '../constants/ActionTypes';
 import persistentState from '../utils/localStorage';
 
 export default function auth(state = {
@@ -13,7 +9,7 @@ export default function auth(state = {
 
   switch (action.type) {
 
-    case LOGIN__SUCCEEDED: {
+    case types.LOGIN__COMPLETED: {
       const {userId, username} = action.payload;
       return Object.assign({}, state, {
         isAuthenticated: true,
@@ -22,14 +18,14 @@ export default function auth(state = {
       });
     }
 
-    case LOGIN__FAILED: {
+    case types.LOGIN__FAILED: {
       return Object.assign({}, state, {
         isAuthenticated: false,
         errorMessage: action.payload.message
       });
     }
 
-    case LOGOUT__SUCCESS: {
+    case types.LOGOUT__SUCCESS: {
       return Object.assign({}, {
         isAuthenticated: false
       });

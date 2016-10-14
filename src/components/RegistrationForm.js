@@ -1,5 +1,6 @@
 import React  from 'react';
 import {Field, reduxForm} from 'redux-form';
+import FormField from './FormField';
 // import '../styles/change-password-form.css';
 
 const RegistrationForm = (props) => {
@@ -11,37 +12,41 @@ const RegistrationForm = (props) => {
 
       <h2 className="form-registration-heading">Register</h2>
 
-      <label htmlFor="username" className="sr-only">Username</label>
-      <Field component="input"
-             type="text"
+      <Field component={FormField}
              name="username"
-             className="form-control"
-             placeholder="Username"
-             required />
+             id="username"
+             type="text"
+             label="Username"
+             placeholder="Your desired Username"
+             required="required"
+      />
 
-      <label htmlFor="emailAddress" className="sr-only">Email Address</label>
-      <Field component="input"
-             type="email"
+      <Field component={FormField}
              name="emailAddress"
-             className="form-control"
+             id="emailAddress"
+             type="email"
+             label="Email Address"
              placeholder="Email Address"
-             required />
+             required="required"
+      />
 
-      <label htmlFor="password" className="sr-only">Password</label>
-      <Field component="input"
-             type="password"
+      <Field component={FormField}
              name="password"
-             className="form-control"
-             placeholder="Password"
-             required />
-
-      <label htmlFor="passwordRepeated" className="sr-only">Password (Repeated)</label>
-      <Field component="input"
+             id="password"
              type="password"
+             label="Password"
+             placeholder="Password"
+             required="required"
+      />
+
+      <Field component={FormField}
              name="passwordRepeated"
-             className="form-control"
+             id="passwordRepeated"
+             type="password"
+             label="Password Repeated"
              placeholder="Password Repeated"
-             required />
+             required="required"
+      />
 
       <button className="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 

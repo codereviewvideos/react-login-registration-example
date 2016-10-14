@@ -1,11 +1,15 @@
 import {takeLatest} from 'redux-saga';
 import {call, put} from 'redux-saga/effects';
+import {push} from 'react-router-redux';
 import * as types from '../constants/ActionTypes';
 import LEVEL from '../constants/NotificationLevels';
 import * as api from '../connectivity/api';
 
 
 export function *doRegister(action) {
+
+  let success = false;
+
   try {
     const {username, email, password, passwordRepeated} = action.payload;
 
@@ -14,14 +18,19 @@ export function *doRegister(action) {
       payload: {sendingRequest: true}
     });
 
-    const responseBody = yield call(api.register, username, email, password, passwordRepeated);
+    const {msg, token} = yield call(api.register, username, email, password, passwordRepeated);
+
+    console.log('regi', msg, token);
 
     yield put({
       type: types.REGISTRATION__SUCCESSFULLY_RECEIVED,
       payload: {
-        message: responseBody
+        idToken: token,
+        message: msg
       }
     });
+
+    success = true;
 
   } catch (e) {
 
@@ -42,15 +51,25 @@ export function *doRegister(action) {
 
   }
 
+  if (success) {
+    yield put(push('/'));
+  }
 }
 
 export function *watchRegister() {
-  yield* takeLatest(types.REGISTRATION__RREQUESTED, doRegister);
+  yield* takeLatest(types.REGISTRATION__REQUESTED, doRegister);
 }
 
 
 
 export function *doSuccessfullyRegistered(action) {
+  yield put({
+    type: types.LOGIN__SUCCEEDED,
+    payload: {
+      idToken: action.payload.idToken
+    }
+  });
+
   yield put({
     type: types.ADD_NOTIFICATION,
     payload: {
