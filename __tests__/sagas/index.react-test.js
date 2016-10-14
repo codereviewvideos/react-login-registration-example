@@ -1,6 +1,6 @@
 jest.mock('../../src/connectivity/storage');
 
-import { fork } from 'redux-saga/effects';
+import {fork} from 'redux-saga/effects';
 import rootSaga from '../../src/sagas/index';
 
 describe('Root Saga', () => {
@@ -8,6 +8,7 @@ describe('Root Saga', () => {
   it('behaves as expected', () => {
 
     const authSaga = require('../../src/sagas/auth.saga');
+    const notificationSaga = require('../../src/sagas/notification.saga');
     const profileSaga = require('../../src/sagas/profile.saga');
     const registrationSaga = require('../../src/sagas/register.saga');
 
@@ -20,6 +21,8 @@ describe('Root Saga', () => {
         fork(authSaga.watchLogin),
         fork(authSaga.watchLoginFailed),
         fork(authSaga.watchLogout),
+
+        fork(notificationSaga.watchNotification),
 
         fork(profileSaga.watchRequestProfile),
         fork(profileSaga.watchChangePassword),
