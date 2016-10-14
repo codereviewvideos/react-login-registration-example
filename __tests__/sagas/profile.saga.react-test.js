@@ -6,6 +6,7 @@ import * as types from '../../src/constants/ActionTypes';
 import * as profileSaga from '../../src/sagas/profile.saga';
 import LEVEL from '../../src/constants/NotificationLevels';
 import { startSubmit, stopSubmit } from 'redux-form';
+import formErrorHelper from '../../src/helpers/formErrorHelper';
 
 describe('Profile Saga', () => {
 
@@ -247,7 +248,8 @@ describe('Profile Saga', () => {
       expect(
         generator.throw({
           message: 'it blew up',
-          statusCode: 403
+          statusCode: 403,
+          data: { fake: 'error' }
         }).value
       ).toEqual(
         put({
@@ -263,10 +265,23 @@ describe('Profile Saga', () => {
       expect(
         generator.next().value
       ).toEqual(
+        call(formErrorHelper, { fake: 'error'}, 'children.current_password.errors[0]')
+      );
+
+
+      expect(
+        generator.next().value
+      ).toEqual(
         put({
           type: types.SENDING_REQUEST,
           payload: {sendingRequest: false}
         })
+      );
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put(stopSubmit('change-password', { currentPassword: undefined }))
       );
 
       expect(generator.next().done).toBeTruthy();
