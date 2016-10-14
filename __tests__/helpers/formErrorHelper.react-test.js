@@ -1,4 +1,4 @@
-import errorHelper from '../../src/helpers/symfonyFormErrorHelper';
+import errorHelper from '../../src/helpers/formErrorHelper';
 
 describe('Symfony Form Error Helper', () => {
 

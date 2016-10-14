@@ -4,7 +4,7 @@ import * as types from '../constants/ActionTypes';
 import LEVEL from '../constants/NotificationLevels';
 import * as api from '../connectivity/api';
 import { startSubmit, stopSubmit } from 'redux-form';
-import _ from 'lodash';
+import formErrorHelper from '../helpers/formErrorHelper';
 
 export function * doRequestProfile(action) {
   try {
@@ -92,7 +92,7 @@ export function * doChangePassword(action) {
     });
 
     yield put(stopSubmit('change-password', {
-      currentPassword: _.get(e.data, 'children.current_password.errors[0]', undefined)
+      currentPassword: formErrorHelper(e.data, 'children.current_password.errors[0]')
     }));
 
   } finally {
