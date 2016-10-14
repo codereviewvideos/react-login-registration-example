@@ -3,12 +3,12 @@ import {call, put} from 'redux-saga/effects';
 import * as types from '../constants/ActionTypes';
 import LEVEL from '../constants/NotificationLevels';
 import * as api from '../connectivity/api';
-import { startSubmit, stopSubmit } from 'redux-form';
+import {startSubmit, stopSubmit} from 'redux-form';
 import formErrorHelper from '../helpers/formErrorHelper';
 
-export function * doRequestProfile(action) {
+export function *doRequestProfile(action) {
   try {
-    const { userId } = action.payload;
+    const {userId} = action.payload;
 
     yield put({
       type: types.SENDING_REQUEST,
@@ -17,7 +17,7 @@ export function * doRequestProfile(action) {
 
     const responseBody = yield call(api.fetchProfile, userId);
 
-    const { username, email } = responseBody;
+    const {username, email} = responseBody;
 
     yield put({
       type: types.PROFILE__SUCCESSFULLY_RECEIVED,
@@ -49,15 +49,15 @@ export function * doRequestProfile(action) {
 
 }
 
-export function * watchRequestProfile() {
+export function *watchRequestProfile() {
   yield* takeLatest(types.PROFILE__REQUESTED, doRequestProfile);
 }
 
 
 
-export function * doChangePassword(action) {
+export function *doChangePassword(action) {
 
-  const { userId, currentPassword, newPassword, newPasswordRepeated, resolve, reject } = action.payload;
+  const {userId, currentPassword, newPassword, newPasswordRepeated} = action.payload;
   let errors = {};
 
   try {
@@ -79,8 +79,6 @@ export function * doChangePassword(action) {
     });
 
   } catch (e) {
-
-    console.log('e', e.data);
 
     yield put({
       type: types.CHANGE_PASSWORD__FAILED_RECEIVING,
@@ -106,14 +104,14 @@ export function * doChangePassword(action) {
   }
 }
 
-export function * watchChangePassword() {
+export function *watchChangePassword() {
   yield* takeLatest(types.CHANGE_PASSWORD__REQUESTED, doChangePassword);
 }
 
 
 
 
-export function * doSucceededChangingPassword(action) {
+export function *doSucceededChangingPassword(action) {
   yield put({
     type: types.ADD_NOTIFICATION,
     payload: {
@@ -123,13 +121,13 @@ export function * doSucceededChangingPassword(action) {
   });
 }
 
-export function * watchSucceededChangingPassword() {
+export function *watchSucceededChangingPassword() {
   yield* takeLatest(types.CHANGE_PASSWORD__SUCCESSFULLY_RECEIVED, doSucceededChangingPassword);
 }
 
 
 
-export function * doFailedChangingPassword(action) {
+export function *doFailedChangingPassword(action) {
   yield put({
     type: types.ADD_NOTIFICATION,
     payload: {
@@ -139,7 +137,7 @@ export function * doFailedChangingPassword(action) {
   });
 }
 
-export function * watchFailedChangingPassword() {
+export function *watchFailedChangingPassword() {
   yield* takeLatest(types.CHANGE_PASSWORD__FAILED_RECEIVING, doFailedChangingPassword);
 }
 
