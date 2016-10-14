@@ -93,9 +93,6 @@ export function *doChangePassword(action) {
       currentPassword: yield call(formErrorHelper, e.data, 'children.current_password.errors[0]')
     };
 
-    console.log('error monkey', errors);
-
-
   } finally {
 
     yield put({

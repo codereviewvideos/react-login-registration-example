@@ -1,5 +1,6 @@
 import React  from 'react';
 import {Field, reduxForm} from 'redux-form';
+import FormField from './FormField';
 // import '../styles/login-page.css';
 
 const LoginForm = (props) => {
@@ -11,24 +12,21 @@ const LoginForm = (props) => {
 
         <h2 className="form-signin-heading">Please log in</h2>
 
-        <label htmlFor="username" className="sr-only">Username</label>
-        <Field component="input"
-               type="text"
+        <Field component={FormField}
                name="username"
-               className="form-control"
+               id="username"
+               type="text"
                placeholder="Username or Email Address"
-               autoCorrect="off"
-               autoCapitalize="off"
-               spellCheck="false"
-               required />
+               required="required"
+        />
 
-        <label htmlFor="inputPassword" className="sr-only">Password</label>
-        <Field component="input"
-               type="password"
+        <Field component={FormField}
                name="password"
-               className="form-control"
+               id="password"
+               type="password"
                placeholder="Password"
-               required />
+               required="required"
+        />
 
         <button className="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
 
