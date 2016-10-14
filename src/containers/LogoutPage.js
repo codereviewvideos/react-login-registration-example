@@ -1,5 +1,5 @@
-import { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
+import {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 import * as types from '../constants/ActionTypes';
 
 class LogoutPage extends Component {

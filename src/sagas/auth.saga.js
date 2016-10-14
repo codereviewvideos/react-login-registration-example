@@ -1,31 +1,31 @@
 import {takeLatest} from 'redux-saga';
 import {call, put} from 'redux-saga/effects';
 import jwtDecode from 'jwt-decode';
-import { push } from 'react-router-redux';
+import {push} from 'react-router-redux';
 import * as types from '../constants/ActionTypes';
 import LEVEL from '../constants/NotificationLevels';
 import * as api from '../connectivity/api';
 import * as storage from '../connectivity/storage';
 
-export function * doLogin(action) {
+export function *doLogin(action) {
   try {
 
-    const { username, password } = action.payload;
+    const {username, password} = action.payload;
 
     yield put({
       type: types.SENDING_REQUEST,
-      payload: { sendingRequest: true }
+      payload: {sendingRequest: true}
     });
 
     const responseBody = yield call(api.login, username, password);
 
-    const { token } = responseBody;
+    const {token} = responseBody;
     if (token === undefined) {
       throw new Error('Cannot continue. Unable to find a valid token in the login response.');
     }
     yield call(storage.save, 'id_token', token);
 
-    const { userId } = jwtDecode(token); // pull out the user data from the JWT
+    const {userId} = jwtDecode(token); // pull out the user data from the JWT
     if (userId === undefined) {
       throw new Error('Cannot continue. Unable to find a user ID in the decoded JWT token.');
     }
@@ -52,7 +52,7 @@ export function * doLogin(action) {
   } finally {
     yield put({
       type: types.SENDING_REQUEST,
-      payload: { sendingRequest: false }
+      payload: {sendingRequest: false}
     });
   }
 }
@@ -64,7 +64,7 @@ export function * doLogin(action) {
  dispatched while a fetch is already pending, that pending fetch is cancelled
  and only the latest one will be run.
  */
-export function * watchLogin() {
+export function *watchLogin() {
   yield* takeLatest(types.LOGIN__REQUESTED, doLogin);
 }
 
@@ -72,7 +72,7 @@ export function * watchLogin() {
 
 
 
-export function * doLoginFailed(error) {
+export function *doLoginFailed(error) {
   yield put({
     type: types.ADD_NOTIFICATION,
     payload: {
@@ -84,7 +84,7 @@ export function * doLoginFailed(error) {
   yield call(storage.cleanUp);
 }
 
-export function * watchLoginFailed() {
+export function *watchLoginFailed() {
   yield* takeLatest(types.LOGIN__FAILED, doLoginFailed);
 }
 
@@ -94,7 +94,7 @@ export function * watchLoginFailed() {
 
 
 
-export function * doLogout() {
+export function *doLogout() {
   yield call(storage.cleanUp);
 
   yield put({
@@ -104,7 +104,7 @@ export function * doLogout() {
   yield put(push('/')); // redirect to /
 }
 
-export function * watchLogout() {
+export function *watchLogout() {
   yield* takeLatest(types.LOGOUT__REQUESTED, doLogout);
 }
 

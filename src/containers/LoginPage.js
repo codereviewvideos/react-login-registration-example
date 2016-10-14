@@ -1,11 +1,17 @@
-import React, { PropTypes, Component } from 'react';
+import React, {PropTypes, Component} from 'react';
 import {connect} from 'react-redux';
-import { withRouter } from 'react-router'
+import {withRouter} from 'react-router';
 import LoginForm from '../components/LoginForm.react';
 import * as types from '../constants/ActionTypes';
 import '../styles/login-page.css';
 
-export class LoginPage extends Component {
+class LoginPage extends Component {
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.pageState.auth.isAuthenticated) {
+      this.props.router.replace('/');
+    }
+  }
 
   doLogin(formData) {
     this.props.dispatch({
@@ -15,12 +21,6 @@ export class LoginPage extends Component {
         password: formData.password
       }
     });
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (newProps.pageState.auth.isAuthenticated) {
-      this.props.router.replace('/');
-    }
   }
 
   render() {
@@ -45,4 +45,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps
-)(withRouter(LoginPage))
+)(withRouter(LoginPage));
