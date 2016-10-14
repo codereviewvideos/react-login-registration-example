@@ -39,9 +39,6 @@ export async function login(username, password) {
  * @returns {*}
  */
 export async function fetchProfile(userId) {
-
-  console.log('base conf', baseRequestConfig);
-
   return await asyncFetch.fetchAsJson(`${apiBaseUrl}/profile/${userId}`, baseRequestConfig);
 }
 

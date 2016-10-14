@@ -11,7 +11,6 @@ class ProfileContainer extends React.Component {
   }
 
   componentDidMount() {
-    console.log('comp did mount', this);
     let { userId } = this.props.pageState.auth;
     this.props.dispatch({
       type: types.PROFILE__REQUESTED,
@@ -22,7 +21,6 @@ class ProfileContainer extends React.Component {
   }
 
   handleChangePassword(formData) {
-    console.log('onChangePasswordHandler',formData );
     let { userId } = this.props.pageState.auth;
     let { currentPassword, newPassword, newPasswordRepeated } = formData;
 
@@ -39,8 +37,6 @@ class ProfileContainer extends React.Component {
   }
 
   render() {
-    console.log('trying to render profile container', this);
-
     let {username, email} = this.props.pageState.profile;
 
     return (

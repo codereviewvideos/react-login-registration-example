@@ -4,9 +4,6 @@ import { Field, reduxForm } from 'redux-form';
 
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => {
-
-  console.log('render Field', input, label, type, touched, error);
-
   return (
   <div>
     <label>{label}</label>
@@ -16,13 +13,13 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => {
     </div>
   </div>
   );
-}
+};
 
 
 
 const ChangePasswordForm = (props) => {
 
-  console.log('ChangePasswordForm props', props);
+  console.log('change password form props', props);
 
   // <Field component={React.DOM.input}
   //        type="password"
@@ -34,6 +31,8 @@ const ChangePasswordForm = (props) => {
   //        spellCheck="false"
   //        required />
 
+  let submitting = false;
+
   return (
     <form className="form-change-password" onSubmit={props.handleSubmit}>
 
@@ -42,7 +41,7 @@ const ChangePasswordForm = (props) => {
       <label htmlFor="currentPassword" className="sr-only">Current Password</label>
       <Field component={renderField}
              name="currentPassword"
-            type="password"
+             type="password"
              label="Current Password"
       />
 
@@ -62,7 +61,14 @@ const ChangePasswordForm = (props) => {
              placeholder="Password Repeated"
              required />
 
-      <button className="btn btn-lg btn-primary btn-block" type="submit">Change Password</button>
+      <button className="btn btn-lg btn-primary btn-block"
+              type="submit"
+              disabled={submitting}>
+        { submitting
+          ? <i className="fa fa-spin fa-spinner"></i>
+          : null
+        }
+        Change Password</button>
 
     </form>
   );

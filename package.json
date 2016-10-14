@@ -31,6 +31,7 @@
   "license": "MIT",
   "dependencies": {
     "jwt-decode": "2.1.0",
+    "lodash": "^4.16.4",
     "object-assign": "4.1.0",
     "react": "15.3.1",
     "react-bootstrap": "0.30.3",

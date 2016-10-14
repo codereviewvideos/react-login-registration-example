@@ -4,7 +4,7 @@ import * as types from '../constants/ActionTypes';
 import LEVEL from '../constants/NotificationLevels';
 import * as api from '../connectivity/api';
 import { startSubmit, stopSubmit } from 'redux-form';
-import { SubmissionError } from 'redux-form';  // ES6
+import _ from 'lodash';
 
 export function * doRequestProfile(action) {
   try {
@@ -81,6 +81,8 @@ export function * doChangePassword(action) {
 
   } catch (e) {
 
+    console.log('e', e.data);
+
     yield put({
       type: types.CHANGE_PASSWORD__FAILED_RECEIVING,
       payload: {
@@ -90,10 +92,7 @@ export function * doChangePassword(action) {
     });
 
     yield put(stopSubmit('change-password', {
-      _error: {currentPassword: 'some errors'},
-      error: {currentPassword: 'bbbb'},
-      currentPassword: 'bbbb',
-      errors: {currentPassword: 'aaa'}
+      currentPassword: _.get(e.data, 'children.current_password.errors[0]', undefined)
     }));
 
   } finally {
@@ -102,6 +101,8 @@ export function * doChangePassword(action) {
       type: types.SENDING_REQUEST,
       payload: {sendingRequest: false}
     });
+
+    // yield put(stopSubmit('change-password'));
 
   }
 }
