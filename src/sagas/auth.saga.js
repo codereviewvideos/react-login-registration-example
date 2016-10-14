@@ -6,6 +6,7 @@ import * as types from '../constants/ActionTypes';
 import LEVEL from '../constants/NotificationLevels';
 import * as api from '../connectivity/api';
 import * as storage from '../connectivity/storage';
+import { delay } from 'redux-saga'
 
 export function *doLogin(action) {
   try {
@@ -18,6 +19,8 @@ export function *doLogin(action) {
     });
 
     const responseBody = yield call(api.login, username, password);
+
+    yield call(delay, 3500);
 
     yield put({
       type: types.LOGIN__SUCCEEDED,
