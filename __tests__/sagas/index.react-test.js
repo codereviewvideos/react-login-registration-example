@@ -18,6 +18,7 @@ describe('Root Saga', () => {
     ).toEqual(
       [
         fork(authSaga.watchLogin),
+        fork(authSaga.watchLoginSucceeded),
         fork(authSaga.watchLoginFailed),
         fork(authSaga.watchLogout),
 

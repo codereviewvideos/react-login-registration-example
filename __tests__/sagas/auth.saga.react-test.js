@@ -1,7 +1,7 @@
 jest.mock('../../src/connectivity/storage.js');
 jest.mock('../../src/connectivity/api.js');
 jest.mock('jwt-decode', () => {
-  return jest.fn(() => ({userId: 456}))
+  return jest.fn(() => ({userId: 456}));
 }); // simple mock to return a decoded token
 
 import {call, put} from 'redux-saga/effects';
@@ -19,10 +19,12 @@ describe('Auth Saga', () => {
 
     it('has a happy path', () => {
 
-      const generator = authSaga.doLogin({ payload: {
-        username: 'tim',
-        password: 'timpass'
-      }});
+      const generator = authSaga.doLogin({
+        payload: {
+          username: 'tim',
+          password: 'timpass'
+        }
+      });
 
       expect(
         generator.next().value
@@ -48,23 +50,9 @@ describe('Auth Saga', () => {
       expect(
         generator.next(fakeResponseBody).value
       ).toEqual(
-        call(storage.save, 'id_token', 'some-token')
-      );
-
-
-      expect(
-        generator.next().value
-      ).toEqual(
-        call(storage.save, 'profile', JSON.stringify({userId: 456, username: 'tim'}))
-      );
-
-
-      expect(
-        generator.next().value
-      ).toEqual(
         put({
           type: types.LOGIN__SUCCEEDED,
-          payload: {userId: 456, username: 'tim'}
+          payload: { idToken: 'some-token'}
         })
       );
 
@@ -78,6 +66,7 @@ describe('Auth Saga', () => {
         })
       );
 
+      expect(generator.next().done).toBeTruthy();
     });
 
 
@@ -183,6 +172,90 @@ describe('Auth Saga', () => {
         })
       );
     });
+  });
+
+
+  describe('doLoginSucceeded', () => {
+    it('behaves as expected', () => {
+
+      const generator = authSaga.doLoginSucceeded({ payload: {
+        idToken: 'some-token'
+      }});
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        call(storage.save, 'id_token', 'some-token')
+      );
+
+      const jwtDecode = require('jwt-decode');
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        call(jwtDecode, 'some-token')
+      );
+
+      let mockJwtDecode = {userId: 456, username: 'tim'};
+
+      expect(
+        generator.next(mockJwtDecode).value
+      ).toEqual(
+        call(storage.save, 'profile', JSON.stringify({userId: 456, username: 'tim'}))
+      );
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put({
+          type: types.LOGIN__COMPLETED,
+          payload: {
+            userId: 456,
+            username: 'tim'
+          }
+        })
+      );
+
+      expect(generator.next().done).toBeTruthy();
+    });
+
+
+    it('throws if idToken is undefined', () => {
+
+      const generator = authSaga.doLoginSucceeded({ payload: {
+        bad: 'data'
+      }});
+
+      expect(() => generator.next()).toThrow('Cannot continue. Unable to find a valid token in the given action.');
+    });
+
+    it('throws if Unable to find a user ID in the decoded JWT token', () => {
+
+      const generator = authSaga.doLoginSucceeded({ payload: {
+        idToken: 'some-token'
+      }});
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        call(storage.save, 'id_token', 'some-token')
+      );
+
+      const jwtDecode = require('jwt-decode');
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        call(jwtDecode, 'some-token')
+      );
+
+      let mockJwtDecode = {bad:'times'};
+
+      expect(
+        () => generator.next(mockJwtDecode)
+      ).toThrow('Cannot continue. Unable to find a user ID in the decoded JWT token.');
+    });
+
   });
 
 

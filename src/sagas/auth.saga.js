@@ -7,6 +7,13 @@ import LEVEL from '../constants/NotificationLevels';
 import * as api from '../connectivity/api';
 import * as storage from '../connectivity/storage';
 
+
+export const MESSAGES = {
+  UNABLE_TO_FIND_TOKEN: 'Cannot continue. Unable to find a valid token in the given action.',
+  UNABLE_TO_FIND_USER_ID: 'Cannot continue. Unable to find a user ID in the decoded JWT token.'
+};
+
+
 export function *doLogin(action) {
   try {
 
@@ -18,6 +25,10 @@ export function *doLogin(action) {
     });
 
     const responseBody = yield call(api.login, username, password);
+
+    if (responseBody.token === undefined) {
+      throw new Error('Cannot continue. Unable to find a valid token in the login response.');
+    }
 
     yield put({
       type: types.LOGIN__SUCCEEDED,
@@ -67,7 +78,7 @@ export function *doLoginSucceeded(action) {
   const {idToken} = action.payload;
 
   if (idToken === undefined) {
-    throw new Error('Cannot continue. Unable to find a valid token in the login response.');
+    throw new Error(MESSAGES.UNABLE_TO_FIND_TOKEN);
   }
 
   yield call(storage.save, 'id_token', idToken);
@@ -75,8 +86,9 @@ export function *doLoginSucceeded(action) {
   const {userId, username} = yield call(jwtDecode, idToken); // pull out the user data from the JWT
 
   if (userId === undefined) {
-    throw new Error('Cannot continue. Unable to find a user ID in the decoded JWT token.');
+    throw new Error(MESSAGES.UNABLE_TO_FIND_USER_ID);
   }
+
   yield call(storage.save, 'profile', JSON.stringify({userId, username}));
 
   yield put({
