@@ -51,7 +51,7 @@ const RegistrationForm = (props) => {
       <button className="btn btn-lg btn-primary btn-block"
               disabled={props.pristine || props.isSubmitting}
               type="submit">
-        {props.isSubmitting ? <i className="fa fa-spin fa-spinner"></i> : null} Register
+        {props.isSubmitting ? <i className="fa fa-spin fa-spinner" /> : null} Register
       </button>
 
     </form>
@@ -61,7 +61,8 @@ const RegistrationForm = (props) => {
 RegistrationForm.propTypes = {
   onSubmit: React.PropTypes.func.isRequired,
   handleSubmit: React.PropTypes.func.isRequired,
-  isSubmitting: React.PropTypes.bool.isRequired
+  isSubmitting: React.PropTypes.bool.isRequired,
+  pristine: React.PropTypes.bool.isRequired
 };
 
 // Decorate the form component

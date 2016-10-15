@@ -36,7 +36,8 @@ class RegistrationContainer extends React.Component {
 }
 
 RegistrationContainer.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  pageState: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

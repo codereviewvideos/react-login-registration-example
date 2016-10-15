@@ -5,9 +5,6 @@ import FormField from './FormField';
 
 const LoginForm = (props) => {
 
-  console.log('login form props', props);
-  console.log('login form props.isSubmitting', props.isSubmitting);
-
   const {handleSubmit} = props;
 
   return (
@@ -34,7 +31,7 @@ const LoginForm = (props) => {
         <button className="btn btn-lg btn-primary btn-block"
                 disabled={props.pristine || props.isSubmitting}
                 type="submit">
-          {props.isSubmitting ? <i className="fa fa-spin fa-spinner"></i> : null} Log in
+          {props.isSubmitting ? <i className="fa fa-spin fa-spinner" /> : null} Log in
         </button>
 
       </form>
@@ -44,6 +41,7 @@ const LoginForm = (props) => {
 LoginForm.propTypes = {
   handleSubmit: React.PropTypes.func.isRequired,
   onSubmit: React.PropTypes.func.isRequired,
+  pristine: React.PropTypes.bool.isRequired,
   isSubmitting: React.PropTypes.bool.isRequired
 };
 
