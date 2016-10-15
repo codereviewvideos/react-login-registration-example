@@ -1,8 +1,6 @@
-// @flow
-
 import _ from 'lodash';
 
-const errorHelper = (errors : object, errorPath : string) => {
+const errorHelper = (errors, errorPath) => {
 
   try {
 

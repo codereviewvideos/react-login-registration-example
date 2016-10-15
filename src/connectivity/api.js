@@ -8,10 +8,7 @@ const apiBaseUrl = 'http://api.rest-user-api.dev/app_acceptance.php';
 
 const getBaseRequestConfig = () => {
 
-  console.log('storage', storage);
-
   const idToken = storage.get('id_token');
-  console.log('got token', idToken);
 
   return {
     method: 'GET',

@@ -7,12 +7,10 @@ import persistentState from '../utils/localStorage';
  * @param value
  */
 export function save(key, value) {
-  console.log('saving to storage', key, value);
   persistentState.setItem(key, value);
 }
 
 export function get(key) {
-  console.log('calling get from storage',key );
   return persistentState.getItem(key);
 }
 
