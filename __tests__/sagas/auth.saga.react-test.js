@@ -269,20 +269,16 @@ describe('Auth Saga', () => {
       expect(
         generator.next().value
       ).toEqual(
-        put({
-          type: types.ADD_NOTIFICATION,
-          payload: {
-            message: 'something went badly wrong',
-            level: LEVEL.ERROR
-          }
-        })
-      );
-
-
-      expect(
-        generator.next().value
-      ).toEqual(
-        call(storage.cleanUp)
+        [
+          put({
+            type: types.ADD_NOTIFICATION,
+            payload: {
+              message: 'something went badly wrong',
+              level: LEVEL.ERROR
+            }
+          }),
+          call(storage.cleanUp)
+        ]
       );
 
       expect(generator.next().done).toBeTruthy();

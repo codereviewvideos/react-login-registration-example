@@ -113,15 +113,16 @@ export function *watchLoginSucceeded() {
 
 
 export function *doLoginFailed(action) {
-  yield put({
-    type: types.ADD_NOTIFICATION,
-    payload: {
-      message: action.payload.message,
-      level: LEVEL.ERROR
-    }
-  });
-
-  yield call(storage.cleanUp);
+  yield [
+    put({
+      type: types.ADD_NOTIFICATION,
+      payload: {
+        message: action.payload.message,
+        level: LEVEL.ERROR
+      }
+    }),
+    call(storage.cleanUp)
+  ];
 }
 
 export function *watchLoginFailed() {
