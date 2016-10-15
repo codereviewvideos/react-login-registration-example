@@ -155,24 +155,21 @@ describe('Registration Saga', () => {
       expect(
         generator.next().value
       ).toEqual(
-        put({
-          type: types.LOGIN__SUCCEEDED,
-          payload: {
-            idToken: 'some-token'
-          }
-        })
-      );
-
-      expect(
-        generator.next().value
-      ).toEqual(
-        put({
-          type: types.ADD_NOTIFICATION,
-          payload: {
-            message: 'it worked!',
-            level: LEVEL.SUCCESS
-          }
-        })
+        [
+          put({
+            type: types.LOGIN__SUCCEEDED,
+            payload: {
+              idToken: 'some-token'
+            }
+          }),
+          put({
+            type: types.ADD_NOTIFICATION,
+            payload: {
+              message: 'it worked!',
+              level: LEVEL.SUCCESS
+            }
+          })
+        ]
       );
 
       expect(generator.next().done).toBeTruthy();

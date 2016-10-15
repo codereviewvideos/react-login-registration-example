@@ -61,20 +61,21 @@ export function *watchRegister() {
 
 
 export function *doSuccessfullyRegistered(action) {
-  yield put({
-    type: types.LOGIN__SUCCEEDED,
-    payload: {
-      idToken: action.payload.idToken
-    }
-  });
-
-  yield put({
-    type: types.ADD_NOTIFICATION,
-    payload: {
-      message: action.payload.message,
-      level: LEVEL.SUCCESS
-    }
-  });
+  yield [
+    put({
+      type: types.LOGIN__SUCCEEDED,
+      payload: {
+        idToken: action.payload.idToken
+      }
+    }),
+    put({
+      type: types.ADD_NOTIFICATION,
+      payload: {
+        message: action.payload.message,
+        level: LEVEL.SUCCESS
+      }
+    })
+  ];
 }
 
 export function *watchSucceededChangingPassword() {
