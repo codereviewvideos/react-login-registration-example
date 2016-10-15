@@ -8,6 +8,6 @@ describe('NotFoundPage', () => {
       <NotFoundPage />
     );
 
-    expect(component.find('h4').html()).toEqual('<h4>404 Page Not Found</h4>');
+    expect(component.find('h4').text()).toEqual('404 Page Not Found');
   })
 });
