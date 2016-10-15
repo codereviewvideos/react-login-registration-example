@@ -6,7 +6,7 @@ import {call, put} from 'redux-saga/effects';
 import * as types from '../../src/constants/ActionTypes';
 import * as registrationSaga from '../../src/sagas/register.saga';
 import LEVEL from '../../src/constants/NotificationLevels';
-
+import {push} from 'react-router-redux';
 
 describe('Registration Saga', () => {
 
@@ -69,6 +69,14 @@ describe('Registration Saga', () => {
           payload: {sendingRequest: false}
         })
       );
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put(push('/'))
+      );
+
+      expect(generator.next().done).toBeTruthy();
     });
 
 
@@ -127,6 +135,8 @@ describe('Registration Saga', () => {
           payload: {sendingRequest: false}
         })
       );
+
+      expect(generator.next().done).toBeTruthy();
     });
   });
 
@@ -165,8 +175,8 @@ describe('Registration Saga', () => {
         })
       );
 
+      expect(generator.next().done).toBeTruthy();
     });
-
   });
 
 
@@ -190,8 +200,7 @@ describe('Registration Saga', () => {
         })
       );
 
+      expect(generator.next().done).toBeTruthy();
     });
-
   });
-
 });
