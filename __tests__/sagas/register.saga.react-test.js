@@ -43,7 +43,10 @@ describe('Registration Saga', () => {
       );
 
 
-      let fakeResponseBody = "The user has been created successfully";
+      let fakeResponseBody = {
+        msg: "The user has been created successfully",
+        token: 'some-token'
+      };
 
       expect(
         generator.next(fakeResponseBody).value
@@ -51,7 +54,8 @@ describe('Registration Saga', () => {
         put({
           type: types.REGISTRATION__SUCCESSFULLY_RECEIVED,
           payload: {
-            message: fakeResponseBody
+            idToken: fakeResponseBody.token,
+            message: fakeResponseBody.msg
           }
         })
       );
@@ -132,8 +136,22 @@ describe('Registration Saga', () => {
     it('behaves as expected', () => {
 
       const generator = registrationSaga.doSuccessfullyRegistered({
-        payload: { message: 'it worked!' }
+        payload: {
+          idToken: 'some-token',
+          message: 'it worked!'
+        }
       });
+
+      expect(
+        generator.next().value
+      ).toEqual(
+        put({
+          type: types.LOGIN__SUCCEEDED,
+          payload: {
+            idToken: 'some-token'
+          }
+        })
+      );
 
       expect(
         generator.next().value
