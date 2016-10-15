@@ -10,7 +10,7 @@ import LogoutPage from './containers/LogoutPage';
 import ProfileContainer from './containers/ProfileContainer';
 import RegistrationContainer from './containers/RegistrationContainer';
 import AboutPage from './components/AboutPage.react.js';
-import NotFoundPage from './components/NotFoundPage.js';
+import NotFoundPage from './components/NotFoundPage.react.js';
 
 
 // Redirects to /login by default

@@ -1,5 +1,5 @@
 import React from 'react';
-import HomePage from '../../src/components/AboutPage.react';
+import HomePage from '../../src/components/HomePage.react';
 import renderer from 'react-test-renderer';
 
 describe('HomePage', () => {

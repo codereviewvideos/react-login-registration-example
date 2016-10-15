@@ -1,24 +1,23 @@
 exports[`HomePage renders as expected 1`] = `
 <div>
-  <h2
-    className="alt-header">
-    About
+  <h1>
+    React Slingshot
+  </h1>
+  <h2>
+    Get Started
   </h2>
-  <p>
-    This example app is part of the 
-    <a
-      href="https://github.com/coryhouse/react-slingshot">
-      React-Slingshot starter kit
-    </a>
-    .
-  </p>
-  <p>
-    <a
-      onClick={[Function]}
-      style={Object {}}>
-      Click this bad link
-    </a>
-     to see the 404 page.
-  </p>
+  <ol>
+    <li>
+      Review the 
+      <a
+        onClick={[Function]}
+        style={Object {}}>
+        demo app
+      </a>
+    </li>
+    <li>
+      Remove the demo and start coding: npm run remove-demo
+    </li>
+  </ol>
 </div>
 `;
