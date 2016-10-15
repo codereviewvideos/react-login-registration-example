@@ -9,7 +9,8 @@ import * as storage from '../connectivity/storage';
 
 
 export const MESSAGES = {
-  UNABLE_TO_FIND_TOKEN: 'Cannot continue. Unable to find a valid token in the given action.',
+  UNABLE_TO_FIND_TOKEN_IN_LOGIN_RESPONSE: 'Cannot continue. Unable to find a valid token in the login response.',
+  UNABLE_TO_FIND_TOKEN_IN_ACTION: 'Cannot continue. Unable to find a valid token in the given action.',
   UNABLE_TO_FIND_USER_ID: 'Cannot continue. Unable to find a user ID in the decoded JWT token.'
 };
 
@@ -27,7 +28,7 @@ export function *doLogin(action) {
     const responseBody = yield call(api.login, username, password);
 
     if (responseBody.token === undefined) {
-      throw new Error('Cannot continue. Unable to find a valid token in the login response.');
+      throw new Error(MESSAGES.UNABLE_TO_FIND_TOKEN_IN_LOGIN_RESPONSE);
     }
 
     yield put({
@@ -78,7 +79,7 @@ export function *doLoginSucceeded(action) {
   const {idToken} = action.payload;
 
   if (idToken === undefined) {
-    throw new Error(MESSAGES.UNABLE_TO_FIND_TOKEN);
+    throw new Error(MESSAGES.UNABLE_TO_FIND_TOKEN_IN_ACTION);
   }
 
   yield call(storage.save, 'id_token', idToken);
