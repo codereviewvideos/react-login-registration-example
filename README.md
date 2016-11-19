@@ -2,6 +2,8 @@
 
 This series covers one approach of building a User Login & Registration front end using React, Redux, and Redux Sagas.
 
+[View the full course at CodeReviewVideos.com][2].
+
 In [the previous series][1] we built a backend API for handling user registration, login, and profile management.
 
 Whilst having an API for these features is nice, it's a little much to expect the vast majority of our customers to work directly with an API. Instead, we must also provide a front end to put a GUI / friendly user interface over the API.
@@ -38,5 +40,7 @@ The buzzwords covered in this series include:
 
 And a whole bunch more.
 
+[View the full course at CodeReviewVideos.com][2].
 
 [1]: https://www.codereviewvideos.com/course/fosuser-fosrest-lexikjwt-user-login-registration-api/video/course-overview-api-walkthrough
+[2]: https://www.codereviewvideos.com/course/react-redux-and-redux-saga-with-symfony-3
