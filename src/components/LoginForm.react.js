@@ -8,7 +8,7 @@ const LoginForm = (props) => {
   const {handleSubmit} = props;
 
   return (
-      <form className="form-signin" onSubmit={handleSubmit(props.onSubmit)}>
+    <form className="form-signin" onSubmit={handleSubmit}>
 
         <h2 className="form-signin-heading">Please log in</h2>
 
@@ -40,7 +40,6 @@ const LoginForm = (props) => {
 
 LoginForm.propTypes = {
   handleSubmit: React.PropTypes.func.isRequired,
-  onSubmit: React.PropTypes.func.isRequired,
   pristine: React.PropTypes.bool.isRequired,
   isSubmitting: React.PropTypes.bool.isRequired
 };
