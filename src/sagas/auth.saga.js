@@ -84,7 +84,7 @@ export function *doLoginSucceeded(action) {
 
   yield call(storage.save, 'id_token', idToken);
 
-  const {userId, username} = yield call(jwtDecode, idToken); // pull out the user data from the JWT
+  const {id: userId, username} = yield call(jwtDecode, idToken); // pull out the user data from the JWT
 
   if (userId === undefined) {
     throw new Error(MESSAGES.UNABLE_TO_FIND_USER_ID);

@@ -21,17 +21,6 @@ const userIsAuthenticated = UserAuthWrapper({ // eslint-disable-line babel/new-c
   wrapperDisplayName: 'UserIsAuthenticated' // a nice name for this auth check,
 });
 
-// const LoginWrapper = UserAuthWrapper({
-//   authSelector: state => state.auth,
-//   redirectAction: routerActions.replace,
-//   wrapperDisplayName: 'LoginWrapper',
-//   predicate: user => user.isAuthenticated,
-//   failureRedirectPath: (state, ownProps) => ownProps.location.query.redirect || '/',
-//   authenticatingSelector: state => state.request.sendingRequest,
-//   allowRedirectBack: false,
-// });
-
-
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage}/>

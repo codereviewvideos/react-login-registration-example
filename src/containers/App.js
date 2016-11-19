@@ -7,17 +7,23 @@ import font from 'font-awesome/css/font-awesome.css'; // eslint-disable-line
 import "babel-polyfill";
 
 
-const App = (props) => (
-  <div>
-    <NavBar auth={props.auth} />
+const App = (props) => {
 
-    <div className="container">
-      {props.children}
-    </div>
+  console.log('app was loaded');
 
-    <NotificationContainer props/>
-  </div>
-);
+ return (
+   <div>
+     <NavBar auth={props.auth}/>
+
+     <div className="container">
+       {props.children}
+     </div>
+
+     <NotificationContainer props/>
+   </div>
+ );
+
+};
 
 App.propTypes = {
   children: PropTypes.element,
